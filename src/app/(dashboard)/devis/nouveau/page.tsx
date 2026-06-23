@@ -391,12 +391,16 @@ export default function NouveauDevisPage() {
           validite_jours: validiteJours,
           dossier: draft.dossier.trim() || undefined,
         })
-        router.push(`/devis/${result.id}`)
+        if ('error' in result) {
+          setError(`Erreur : ${result.error}`)
+          window.scrollTo({ top: 0, behavior: 'smooth' })
+          return
+        }
+        router.push(`/devis/${(result as { id: string }).id}`)
       } catch (e: unknown) {
         const msg = e instanceof Error ? e.message : String(e)
-        setError(`Erreur : ${msg}`)
+        setError(`Erreur inattendue : ${msg}`)
         window.scrollTo({ top: 0, behavior: 'smooth' })
-        console.error('[createDevis]', e)
       }
     })
   }

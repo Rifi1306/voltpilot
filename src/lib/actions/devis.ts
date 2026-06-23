@@ -89,44 +89,36 @@ export async function createDevisAction(payload: {
   notes: string
   validite_jours: number
   dossier?: string
-}) {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Non authentifié — reconnectez-vous')
+}): Promise<{ id: string } | { error: string }> {
+  try {
+    const supabase = await createClient()
+    const { data: { user } } = await supabase.auth.getUser()
+    if (!user) return { error: 'Non authentifié — reconnectez-vous' }
 
-  const numero = `DEV-${Date.now()}`
-  const date_validite = format(addDays(new Date(), payload.validite_jours), 'yyyy-MM-dd')
+    const numero = `DEV-${Date.now()}`
+    const date_validite = format(addDays(new Date(), payload.validite_jours), 'yyyy-MM-dd')
 
-  console.log('[createDevis] insert payload:', {
-    user_id: user.id,
-    client_id: payload.client_id,
-    numero,
-    date_validite,
-    lignes_count: payload.lignes.length,
-  })
+    const { data, error } = await supabase.from('devis').insert({
+      user_id: user.id,
+      client_id: payload.client_id,
+      numero,
+      statut: 'brouillon',
+      lignes: payload.lignes as Json,
+      remise: payload.remise,
+      acompte: payload.acompte,
+      conditions_paiement: payload.conditions_paiement,
+      notes: payload.notes || null,
+      dossier: payload.dossier || null,
+      date_validite,
+    }).select().single()
 
-  const { data, error } = await supabase.from('devis').insert({
-    user_id: user.id,
-    client_id: payload.client_id,
-    numero,
-    statut: 'brouillon',
-    lignes: payload.lignes as Json,
-    remise: payload.remise,
-    acompte: payload.acompte,
-    conditions_paiement: payload.conditions_paiement,
-    notes: payload.notes || null,
-    dossier: payload.dossier || null,
-    date_validite,
-  }).select().single()
+    if (error) return { error: `DB: ${error.message} [${error.code}]` }
 
-  if (error) {
-    console.error('[createDevis] supabase error:', error)
-    throw new Error(`Supabase: ${error.message} (code: ${error.code})`)
+    revalidatePath('/devis')
+    return { id: data.id }
+  } catch (e) {
+    return { error: `Exception: ${e instanceof Error ? e.message : String(e)}` }
   }
-
-  revalidatePath('/devis')
-  revalidatePath(`/devis/${data.id}`)
-  return { id: data.id }
 }
 
 export async function updateDevisStatut(id: string, statut: string) {
