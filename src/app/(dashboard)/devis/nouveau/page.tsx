@@ -393,7 +393,8 @@ export default function NouveauDevisPage() {
         })
         router.push(`/devis/${result.id}`)
       } catch (e: unknown) {
-        setError('Erreur lors de la sauvegarde. Réessayez.')
+        const msg = e instanceof Error ? e.message : String(e)
+        setError(`Erreur : ${msg}`)
         window.scrollTo({ top: 0, behavior: 'smooth' })
         console.error('[createDevis]', e)
       }
