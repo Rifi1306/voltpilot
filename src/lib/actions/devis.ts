@@ -92,10 +92,18 @@ export async function createDevisAction(payload: {
 }) {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
-  if (!user) throw new Error('Non authentifié')
+  if (!user) throw new Error('Non authentifié — reconnectez-vous')
 
   const numero = `DEV-${Date.now()}`
   const date_validite = format(addDays(new Date(), payload.validite_jours), 'yyyy-MM-dd')
+
+  console.log('[createDevis] insert payload:', {
+    user_id: user.id,
+    client_id: payload.client_id,
+    numero,
+    date_validite,
+    lignes_count: payload.lignes.length,
+  })
 
   const { data, error } = await supabase.from('devis').insert({
     user_id: user.id,
@@ -111,7 +119,11 @@ export async function createDevisAction(payload: {
     date_validite,
   }).select().single()
 
-  if (error) throw error
+  if (error) {
+    console.error('[createDevis] supabase error:', error)
+    throw new Error(`Supabase: ${error.message} (code: ${error.code})`)
+  }
+
   revalidatePath('/devis')
   revalidatePath(`/devis/${data.id}`)
   return { id: data.id }
