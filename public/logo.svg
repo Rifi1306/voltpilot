@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="boltGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#fde68a" stop-opacity="0.9"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#f59e0b" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <!-- Hexagon -->
+  <path
+    d="M100 8 L174 50 L174 150 L100 192 L26 150 L26 50 Z"
+    fill="url(#hexGrad)"
+    filter="url(#shadow)"
+  />
+
+  <!-- Inner hexagon outline -->
+  <path
+    d="M100 22 L162 57 L162 143 L100 178 L38 143 L38 57 Z"
+    fill="none"
+    stroke="rgba(255,255,255,0.15)"
+    stroke-width="1.5"
+  />
+
+  <!-- Lightning bolt V -->
+  <path
+    d="M78 62 L95 105 L84 105 L112 148 L104 110 L116 110 Z"
+    fill="url(#boltGrad)"
+  />
+</svg>

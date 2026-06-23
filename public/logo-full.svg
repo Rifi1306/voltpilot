@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" fill="none">
+  <defs>
+    <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <linearGradient id="boltGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#fde68a" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="3" stdDeviation="6" flood-color="#f59e0b" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Hexagon icon -->
+  <path
+    d="M60 5 L107 32 L107 86 L60 113 L13 86 L13 32 Z"
+    fill="url(#hexGrad)"
+    filter="url(#shadow)"
+  />
+  <path
+    d="M60 16 L98 37 L98 81 L60 102 L22 81 L22 37 Z"
+    fill="none"
+    stroke="rgba(255,255,255,0.15)"
+    stroke-width="1.2"
+  />
+
+  <!-- Lightning bolt -->
+  <path
+    d="M48 34 L61 62 L52 62 L70 88 L64 64 L74 64 Z"
+    fill="url(#boltGrad)"
+  />
+
+  <!-- VOLT -->
+  <text
+    x="136"
+    y="76"
+    font-family="'SF Pro Display','Helvetica Neue',Arial,sans-serif"
+    font-size="52"
+    font-weight="800"
+    letter-spacing="-1"
+    fill="url(#textGrad)"
+  >VOLT</text>
+
+  <!-- PILOT -->
+  <text
+    x="284"
+    y="76"
+    font-family="'SF Pro Display','Helvetica Neue',Arial,sans-serif"
+    font-size="52"
+    font-weight="300"
+    letter-spacing="-1"
+    fill="#ffffff"
+    opacity="0.92"
+  >PILOT</text>
+
+  <!-- Dot séparateur -->
+  <circle cx="277" cy="66" r="4" fill="#f59e0b" opacity="0.7"/>
+
+  <!-- Tagline -->
+  <text
+    x="136"
+    y="100"
+    font-family="'SF Pro Display','Helvetica Neue',Arial,sans-serif"
+    font-size="14"
+    font-weight="400"
+    letter-spacing="3"
+    fill="rgba(255,255,255,0.35)"
+  >SOLAR DEVIS AUTOMATISÉS</text>
+</svg>
