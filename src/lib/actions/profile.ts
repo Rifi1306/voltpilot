@@ -29,6 +29,7 @@ export async function updateProfileAction(formData: FormData) {
     conditions_paiement_defaut: formData.get('conditions_paiement_defaut') as string,
     validite_devis_defaut: parseInt(formData.get('validite_devis_defaut') as string) || 30,
     couleur_primaire: formData.get('couleur_primaire') as string,
+    widget_show_price: formData.get('widget_show_price') === 'true',
   }).eq('id', user.id)
 
   if (error) throw error

@@ -25,6 +25,7 @@ export interface Database {
           stripe_subscription_id: string | null
           subscription_status: string
           subscription_period_end: string | null
+          widget_show_price: boolean
           created_at: string
         }
         Insert: {
@@ -44,6 +45,7 @@ export interface Database {
           plan?: string
           stripe_customer_id?: string | null
           stripe_subscription_id?: string | null
+          widget_show_price?: boolean
         }
         Update: {
           nom?: string
@@ -62,6 +64,7 @@ export interface Database {
           stripe_subscription_id?: string | null
           subscription_status?: string
           subscription_period_end?: string | null
+          widget_show_price?: boolean
         }
         Relationships: []
       }
@@ -156,6 +159,18 @@ export interface Database {
           type_projet: string | null
           message: string | null
           statut: string
+          surface: number | null
+          facture_mensuelle: number | null
+          objectif: string | null
+          type_bien: string | null
+          type_toiture: string | null
+          adresse: string | null
+          consentement: boolean
+          nb_panneaux: number | null
+          puissance_kwc: number | null
+          production_annuelle: number | null
+          fourchette_min: number | null
+          fourchette_max: number | null
           created_at: string
         }
         Insert: {
@@ -168,9 +183,26 @@ export interface Database {
           type_projet?: string | null
           message?: string | null
           statut?: string
+          surface?: number | null
+          facture_mensuelle?: number | null
+          objectif?: string | null
+          type_bien?: string | null
+          type_toiture?: string | null
+          adresse?: string | null
+          consentement?: boolean
+          nb_panneaux?: number | null
+          puissance_kwc?: number | null
+          production_annuelle?: number | null
+          fourchette_min?: number | null
+          fourchette_max?: number | null
         }
         Update: {
           statut?: string
+          nb_panneaux?: number | null
+          puissance_kwc?: number | null
+          production_annuelle?: number | null
+          fourchette_min?: number | null
+          fourchette_max?: number | null
         }
         Relationships: []
       }

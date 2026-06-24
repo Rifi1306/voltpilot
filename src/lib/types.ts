@@ -11,6 +11,19 @@ export interface Lead {
   message: string
   createdAt: string
   status: 'nouveau' | 'contacte' | 'converti'
+  // V2 estimation fields
+  surface?: number | null
+  factureMensuelle?: number | null
+  objectif?: string | null
+  typeBien?: string | null
+  typeToiture?: string | null
+  adresse?: string | null
+  consentement?: boolean
+  nbPanneaux?: number | null
+  puissanceKwc?: number | null
+  productionAnnuelle?: number | null
+  fourchetteMin?: number | null
+  fourchetteMax?: number | null
 }
 
 export interface Client {

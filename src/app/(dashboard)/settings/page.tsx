@@ -30,6 +30,7 @@ type Form = {
   conditions_paiement_defaut: string
   validite_devis_defaut: string
   couleur_primaire: string
+  widget_show_price: boolean
 }
 
 const DEFAULT_FORM: Form = {
@@ -44,6 +45,7 @@ const DEFAULT_FORM: Form = {
   conditions_paiement_defaut: '30 jours net',
   validite_devis_defaut: '30',
   couleur_primaire: '#0ea5e9',
+  widget_show_price: true,
 }
 
 export default function SettingsPage() {
@@ -73,6 +75,7 @@ export default function SettingsPage() {
           conditions_paiement_defaut: p.conditions_paiement_defaut ?? '30 jours net',
           validite_devis_defaut: String(p.validite_devis_defaut ?? 30),
           couleur_primaire: p.couleur_primaire ?? '#0ea5e9',
+          widget_show_price: p.widget_show_price ?? true,
         })
       }
     }).catch(console.error)
@@ -276,9 +279,26 @@ export default function SettingsPage() {
           <h2 className="font-bold text-slate-900 mb-1 flex items-center gap-2">
             <Code2 size={18} className="text-indigo-500" /> Intégrer VoltPilot sur votre site
           </h2>
-          <p className="text-sm text-slate-500 mb-5">
+          <p className="text-sm text-slate-500 mb-4">
             Copiez ce code et collez-le sur votre site. Vos visiteurs pourront demander un devis directement depuis votre page.
           </p>
+
+          {/* Toggle affichage prix */}
+          <div className="flex items-center justify-between p-4 rounded-xl border mb-5"
+            style={{ border: form.widget_show_price ? '1.5px solid #0ea5e9' : '1.5px solid #e4e7ec', background: form.widget_show_price ? 'rgba(14,165,233,0.04)' : '#fafafa' }}>
+            <div>
+              <p className="text-sm font-semibold text-slate-800">Afficher la fourchette de prix aux visiteurs</p>
+              <p className="text-xs text-slate-400">Si désactivé, l&apos;estimation de production reste visible mais le prix est masqué</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setForm(prev => ({ ...prev, widget_show_price: !prev.widget_show_price }))}
+              className="w-11 h-6 rounded-full flex items-center px-0.5 transition-colors flex-shrink-0 ml-4"
+              style={{ background: form.widget_show_price ? '#0ea5e9' : '#e2e8f0' }}
+            >
+              <div className={`w-5 h-5 rounded-full bg-white shadow transition-transform ${form.widget_show_price ? 'translate-x-5' : ''}`} />
+            </button>
+          </div>
           <div className="mb-4 rounded-xl overflow-hidden border border-slate-100" style={{ height: 320 }}>
             {userId && <iframe src={`/w/${userId}`} width="100%" height="320" style={{ border: 'none', display: 'block' }} title="Aperçu widget" />}
           </div>

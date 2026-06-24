@@ -12,7 +12,7 @@ export default async function WidgetPage({ params }: { params: Promise<{ userId:
   const admin = createAdminClient()
   const { data: profile } = await admin
     .from('profiles')
-    .select('nom, couleur_primaire')
+    .select('nom, couleur_primaire, widget_show_price')
     .eq('id', userId)
     .single()
 
@@ -23,6 +23,7 @@ export default async function WidgetPage({ params }: { params: Promise<{ userId:
       installerId={userId}
       companyNom={profile.nom ?? 'Votre installateur solaire'}
       couleur={profile.couleur_primaire ?? '#0ea5e9'}
+      showPrice={profile.widget_show_price ?? true}
     />
   )
 }
