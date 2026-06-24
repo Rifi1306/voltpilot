@@ -134,7 +134,7 @@ function buildEmailHtml(params: {
 </html>`
 }
 
-export async function sendDevisEmailAction(devisId: string): Promise<{ ok: boolean; error?: string }> {
+export async function sendDevisEmailAction(devisId: string, emailOverride?: string): Promise<{ ok: boolean; error?: string }> {
   try {
     const supabase = await createClient()
     const { data: { user } } = await supabase.auth.getUser()
@@ -164,7 +164,8 @@ export async function sendDevisEmailAction(devisId: string): Promise<{ ok: boole
 
     const client = devis.clients
 
-    if (!client.email) return { ok: false, error: 'Le client n\'a pas d\'adresse email' }
+    const toEmail = emailOverride?.trim() || client.email
+    if (!toEmail) return { ok: false, error: 'Le client n\'a pas d\'adresse email' }
 
     const lignes = parseLignes(devis.lignes)
     const montantTTC = rawTTC(lignes, devis.remise ?? 0)
@@ -173,7 +174,7 @@ export async function sendDevisEmailAction(devisId: string): Promise<{ ok: boole
 
     const { error: emailError } = await resend.emails.send({
       from: `${companyNom} <onboarding@resend.dev>`,
-      to: [client.email],
+      to: [toEmail],
       subject: `Votre devis ${devis.numero} — ${eur(montantTTC)}`,
       html: buildEmailHtml({
         devisNumero: devis.numero,

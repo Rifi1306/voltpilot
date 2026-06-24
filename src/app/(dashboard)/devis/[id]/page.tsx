@@ -89,6 +89,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
   const [showSendModal, setShowSendModal] = useState(false)
   const [sendStatus, setSendStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [sendError, setSendError] = useState('')
+  const [sendEmailTo, setSendEmailTo] = useState('')
   const { formatCurrency } = useLanguage()
 
   useEffect(() => {
@@ -118,7 +119,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
 
   const handleSendEmail = async () => {
     setSendStatus('sending')
-    const result = await sendDevisEmailAction(id)
+    const result = await sendDevisEmailAction(id, sendEmailTo)
     if (result.ok) {
       setSendStatus('success')
       setDevis(prev => prev && prev.statut === 'brouillon' ? { ...prev, statut: 'envoye' } : prev)
@@ -191,7 +192,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
           </button>
           {client?.email && (
             <button
-              onClick={() => { setSendStatus('idle'); setSendError(''); setShowSendModal(true) }}
+              onClick={() => { setSendStatus('idle'); setSendError(''); setSendEmailTo(client?.email ?? ''); setShowSendModal(true) }}
               className="btn-primary text-sm"
               disabled={isPending}
             >
@@ -440,8 +441,14 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
           <div className="bg-slate-50 rounded-xl p-4 mb-5 space-y-2">
             <div className="flex items-center gap-2 text-sm">
               <Mail size={14} className="text-slate-400 flex-shrink-0" />
-              <span className="text-slate-500">Destinataire :</span>
-              <span className="font-semibold text-slate-900">{client?.email}</span>
+              <span className="text-slate-500 shrink-0">Destinataire :</span>
+              <input
+                type="email"
+                value={sendEmailTo}
+                onChange={e => setSendEmailTo(e.target.value)}
+                disabled={sendStatus === 'sending'}
+                className="flex-1 min-w-0 font-semibold text-slate-900 bg-white border border-slate-200 rounded-lg px-2 py-1 focus:outline-none focus:ring-2 focus:ring-sky-400 disabled:opacity-60"
+              />
             </div>
             <div className="flex items-center gap-2 text-sm">
               <Mail size={14} className="text-slate-400 flex-shrink-0 opacity-0" />
