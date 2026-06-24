@@ -2,7 +2,7 @@
 import { useState, useEffect, useTransition, useRef } from 'react'
 import { Header } from '@/components/layout/Header'
 import { getProfile, updateProfileAction } from '@/lib/actions/profile'
-import { Sun, Save, Code2, Copy, CheckCheck, ExternalLink, CheckCircle2, Upload, X, PenLine } from 'lucide-react'
+import { Sun, Save, Code2, Copy, CheckCheck, ExternalLink, CheckCircle2, Upload, X, PenLine, MousePointerClick } from 'lucide-react'
 
 const LOGO_KEY = 'voltpilot_logo_b64'
 const SIG_KEY = 'voltpilot_signature_active'
@@ -16,6 +16,15 @@ function buildEmbedCode(userId: string, baseUrl: string) {
   style="border-radius:16px;box-shadow:0 4px 24px rgba(0,0,0,0.08);"
   title="Devis solaire gratuit"
 ></iframe>`
+}
+
+function buildButtonCode(userId: string, baseUrl: string, couleur: string) {
+  return `<a
+  href="${baseUrl}/w/${userId}"
+  target="_blank"
+  rel="noopener"
+  style="display:inline-block;background:${couleur};color:white;padding:14px 28px;border-radius:10px;font-family:sans-serif;font-size:15px;font-weight:700;text-decoration:none;"
+>☀️ Demander un devis solaire gratuit</a>`
 }
 
 type Form = {
@@ -52,6 +61,7 @@ export default function SettingsPage() {
   const [form, setForm] = useState<Form>(DEFAULT_FORM)
   const [userId, setUserId] = useState('')
   const [copied, setCopied] = useState(false)
+  const [copiedBtn, setCopiedBtn] = useState(false)
   const [saved, setSaved] = useState(false)
   const [isPending, startTransition] = useTransition()
   const [logoDataUrl, setLogoDataUrl] = useState<string | null>(null)
@@ -130,10 +140,18 @@ export default function SettingsPage() {
   const baseUrl = process.env.NEXT_PUBLIC_URL ?? 'https://voltpilot.fr'
   const embedCode = userId ? buildEmbedCode(userId, baseUrl) : '…chargement…'
 
+  const buttonCode = userId ? buildButtonCode(userId, baseUrl, form.couleur_primaire || '#0ea5e9') : '…chargement…'
+
   const handleCopy = () => {
     navigator.clipboard.writeText(embedCode)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
+  }
+
+  const handleCopyBtn = () => {
+    navigator.clipboard.writeText(buttonCode)
+    setCopiedBtn(true)
+    setTimeout(() => setCopiedBtn(false), 2000)
   }
 
   return (
@@ -319,6 +337,39 @@ export default function SettingsPage() {
                 <ExternalLink size={14} /> Voir l&apos;aperçu plein écran
               </a>
             )}
+          </div>
+
+          {/* Bouton HTML prêt à copier */}
+          <div className="mt-6 pt-5 border-t border-slate-100">
+            <h3 className="font-semibold text-slate-800 mb-1 flex items-center gap-2 text-sm">
+              <MousePointerClick size={15} className="text-indigo-500" /> Option 2 — Bouton cliquable
+            </h3>
+            <p className="text-xs text-slate-400 mb-3">Collez ce bouton n&apos;importe où sur votre site. Un clic ouvre le formulaire dans un nouvel onglet.</p>
+
+            {/* Aperçu du bouton */}
+            <div className="mb-3 p-4 bg-slate-50 rounded-xl flex items-center justify-center border border-slate-100">
+              {userId && (
+                <a
+                  href={`/w/${userId}`}
+                  target="_blank"
+                  style={{ display: 'inline-block', background: form.couleur_primaire || '#0ea5e9', color: 'white', padding: '12px 24px', borderRadius: '10px', fontFamily: 'sans-serif', fontSize: '14px', fontWeight: 700, textDecoration: 'none' }}
+                >
+                  ☀️ Demander un devis solaire gratuit
+                </a>
+              )}
+            </div>
+
+            <div className="relative">
+              <pre className="bg-slate-900 text-slate-100 rounded-xl p-4 text-xs overflow-x-auto leading-relaxed select-all">{buttonCode}</pre>
+              <button
+                type="button"
+                onClick={handleCopyBtn}
+                className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all"
+                style={copiedBtn ? { background: 'rgba(34,197,94,0.15)', color: '#16a34a' } : { background: 'rgba(255,255,255,0.1)', color: '#e2e8f0' }}
+              >
+                {copiedBtn ? <><CheckCheck size={13} /> Copié !</> : <><Copy size={13} /> Copier</>}
+              </button>
+            </div>
           </div>
         </div>
 
