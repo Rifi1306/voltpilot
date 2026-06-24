@@ -114,7 +114,7 @@ export interface Database {
           acompte: number
           conditions_paiement: string
           notes: string | null
-          dossier: string | null
+          dossier_id: string | null
           date_validite: string
           created_at: string
         }
@@ -128,7 +128,7 @@ export interface Database {
           acompte?: number
           conditions_paiement?: string
           notes?: string | null
-          dossier?: string | null
+          dossier_id?: string | null
           date_validite: string
         }
         Update: {
@@ -139,7 +139,7 @@ export interface Database {
           acompte?: number
           conditions_paiement?: string
           notes?: string | null
-          dossier?: string | null
+          dossier_id?: string | null
           date_validite?: string
         }
         Relationships: []

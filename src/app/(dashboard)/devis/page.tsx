@@ -16,7 +16,7 @@ type SDevis = {
   remise: number | null
   created_at: string
   date_validite: string
-  dossier: string | null
+  dossier_id: string | null
   clients: { nom: string; email: string; ville: string } | null
 }
 
@@ -58,17 +58,17 @@ export default function DevisPage() {
     { label: t.quotes.refused,  value: 'refuse' },
   ]
 
-  const dossiers = Array.from(new Set(allDevis.map(d => d.dossier).filter((d): d is string => !!d))).sort()
+  const dossiers = Array.from(new Set(allDevis.map(d => d.dossier_id).filter((d): d is string => !!d))).sort()
 
   const filtered = allDevis.filter(d => {
     const matchesFilter = activeFilter === 'all' || d.statut === activeFilter
-    const matchesDossier = activeDossier === null || d.dossier === activeDossier
+    const matchesDossier = activeDossier === null || d.dossier_id === activeDossier
     const matchesSearch =
       search === '' ||
       d.numero.toLowerCase().includes(search.toLowerCase()) ||
       d.clients?.nom?.toLowerCase().includes(search.toLowerCase()) ||
       d.clients?.ville?.toLowerCase().includes(search.toLowerCase()) ||
-      (d.dossier ?? '').toLowerCase().includes(search.toLowerCase())
+      (d.dossier_id ?? '').toLowerCase().includes(search.toLowerCase())
     return matchesFilter && matchesDossier && matchesSearch
   })
 
@@ -210,10 +210,10 @@ export default function DevisPage() {
                       <tr key={d.id} className="table-row-hover">
                         <td className="px-5 py-4">
                           <span className="font-semibold text-sm text-slate-900">{d.numero}</span>
-                          {d.dossier && (
+                          {d.dossier_id && (
                             <span className="mt-1 flex items-center gap-1 text-xs text-indigo-600 font-medium">
                               <FolderOpen size={11} />
-                              {d.dossier}
+                              {d.dossier_id}
                             </span>
                           )}
                         </td>

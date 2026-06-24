@@ -3,6 +3,7 @@ import { useState, useCallback, useEffect, useTransition, useRef } from 'react'
 import { Header } from '@/components/layout/Header'
 import { getClients } from '@/lib/actions/clients'
 import { createDevisAction } from '@/lib/actions/devis'
+import { getDossiers, type Dossier } from '@/lib/actions/dossiers'
 import { LigneDevis } from '@/lib/types'
 import { calculateLigne, calculateTotaux, generateId } from '@/lib/utils'
 import { useLanguage } from '@/i18n/LanguageContext'
@@ -158,7 +159,7 @@ function newLigne(): LigneDevis {
 
 type DraftState = {
   clientId: string; dateValidite: string; conditionsPaiement: string; notes: string
-  remiseGlobale: number; acompte: number; lignes: LigneDevis[]; dossier: string
+  remiseGlobale: number; acompte: number; lignes: LigneDevis[]; dossierId: string
   segment: string
   // Bloc 2
   typeToiture: string; surface: number; orientation: string; inclinaison: string
@@ -175,7 +176,7 @@ function defaultDraft(): DraftState {
   return {
     clientId: '', dateValidite: d.toISOString().split('T')[0],
     conditionsPaiement: '30 jours net', notes: '', remiseGlobale: 0, acompte: 0,
-    lignes: [newLigne()], dossier: '', segment: 'Résidentiel',
+    lignes: [newLigne()], dossierId: '', segment: 'Résidentiel',
     typeToiture: '', surface: 30, orientation: 'Sud', inclinaison: 'Optimal (30–35°)',
     ombrage: false, typePose: 'Surimposé', hauteurBatiment: '', codePostal: '',
     consoAnnuelle: 0, profilConso: 'Standard', alimentation: 'Monophasé',
@@ -220,6 +221,7 @@ export default function NouveauDevisPage() {
   const router = useRouter()
   const { formatCurrency } = useLanguage()
   const [clients, setClients] = useState<SClient[]>([])
+  const [dossiers, setDossiers] = useState<Dossier[]>([])
   const [draft, setDraft] = useState<DraftState>(defaultDraft)
   const [showCatalogue, setShowCatalogue] = useState(false)
   const [error, setError] = useState('')
@@ -259,6 +261,7 @@ export default function NouveauDevisPage() {
       }
     } catch { /* ignore */ }
     getClients().then(c => setClients(c as SClient[])).catch(console.error)
+    getDossiers().then(d => setDossiers(d)).catch(console.error)
   }, [])
 
   // Autosave
@@ -389,7 +392,7 @@ export default function NouveauDevisPage() {
           conditions_paiement: draft.conditionsPaiement,
           notes: draft.notes,
           validite_jours: validiteJours,
-          dossier: draft.dossier.trim() || undefined,
+          dossier_id: draft.dossierId || undefined,
         })
         if ('error' in result) {
           setError(`Erreur : ${result.error}`)
@@ -510,8 +513,10 @@ export default function NouveauDevisPage() {
               <label className="block text-sm font-semibold text-slate-700 mb-1.5">
                 Dossier / Projet <span className="text-slate-400 font-normal text-xs">optionnel</span>
               </label>
-              <input type="text" value={draft.dossier} onChange={e => set('dossier', e.target.value)}
-                placeholder="Ex : Installation Dupont Bordeaux…" className="input-field" />
+              <select value={draft.dossierId} onChange={e => set('dossierId', e.target.value)} className="select-field">
+                <option value="">Aucun dossier</option>
+                {dossiers.map(d => <option key={d.id} value={d.id}>{d.nom}</option>)}
+              </select>
             </div>
           </div>
         </section>

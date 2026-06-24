@@ -88,7 +88,7 @@ export async function createDevisAction(payload: {
   conditions_paiement: string
   notes: string
   validite_jours: number
-  dossier?: string
+  dossier_id?: string
 }): Promise<{ id: string } | { error: string }> {
   try {
     const supabase = await createClient()
@@ -108,7 +108,7 @@ export async function createDevisAction(payload: {
       acompte: payload.acompte,
       conditions_paiement: payload.conditions_paiement,
       notes: payload.notes || null,
-      dossier: payload.dossier || null,
+      dossier_id: payload.dossier_id || null,
       date_validite,
     }).select().single()
 
