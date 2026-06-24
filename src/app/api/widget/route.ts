@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createAdminClient } from '@/lib/supabase/admin'
 import { computeEstimationWithPVGIS } from '@/lib/estimation'
+import { Resend } from 'resend'
+
+const resend = new Resend(process.env.RESEND_API_KEY)
 
 // POST — public: visitor submits from the embedded widget
 export async function POST(request: NextRequest) {
@@ -65,6 +68,63 @@ export async function POST(request: NextRequest) {
     })
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+    // Notification email à l'installateur (fire-and-forget)
+    try {
+      const { data: profile } = await admin
+        .from('profiles')
+        .select('email, nom, couleur_primaire')
+        .eq('id', installer_id)
+        .single()
+
+      if (profile?.email) {
+        const couleur = profile.couleur_primaire ?? '#0ea5e9'
+        const companyNom = profile.nom ?? 'VoltPilot'
+        const eur = (n: number) =>
+          new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n)
+
+        await resend.emails.send({
+          from: `VoltPilot <onboarding@resend.dev>`,
+          to: [profile.email],
+          subject: `Nouveau lead widget — ${String(nom).trim()} (${ville ?? code_postal ?? ''})`,
+          html: `<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#f8fafc;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+  <div style="max-width:560px;margin:0 auto;padding:28px 16px;">
+    <div style="background:${couleur};border-radius:14px 14px 0 0;padding:24px 28px;">
+      <p style="margin:0;color:rgba(255,255,255,0.8);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">Nouveau lead reçu</p>
+      <h1 style="margin:6px 0 0;color:white;font-size:20px;font-weight:700;">${String(nom).trim()}</h1>
+    </div>
+    <div style="background:white;border-radius:0 0 14px 14px;padding:24px 28px;box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+      <table style="width:100%;border-collapse:collapse;">
+        <tr><td style="padding:6px 0;font-size:13px;color:#64748b;width:40%;">Email</td><td style="padding:6px 0;font-size:13px;color:#0f172a;font-weight:600;">${String(email).trim()}</td></tr>
+        ${telephone ? `<tr><td style="padding:6px 0;font-size:13px;color:#64748b;">Téléphone</td><td style="padding:6px 0;font-size:13px;color:#0f172a;font-weight:600;">${String(telephone).trim()}</td></tr>` : ''}
+        ${(code_postal || ville) ? `<tr><td style="padding:6px 0;font-size:13px;color:#64748b;">Localisation</td><td style="padding:6px 0;font-size:13px;color:#0f172a;font-weight:600;">${[ville, code_postal].filter(Boolean).join(' · ')}</td></tr>` : ''}
+        <tr><td style="padding:6px 0;font-size:13px;color:#64748b;">Projet</td><td style="padding:6px 0;font-size:13px;color:#0f172a;font-weight:600;">${type_projet ?? 'Résidentiel'}</td></tr>
+        ${objectif ? `<tr><td style="padding:6px 0;font-size:13px;color:#64748b;">Objectif</td><td style="padding:6px 0;font-size:13px;color:#0f172a;">${objectif}</td></tr>` : ''}
+        ${surface ? `<tr><td style="padding:6px 0;font-size:13px;color:#64748b;">Surface toiture</td><td style="padding:6px 0;font-size:13px;color:#0f172a;">${surface} m²</td></tr>` : ''}
+        ${facture_mensuelle ? `<tr><td style="padding:6px 0;font-size:13px;color:#64748b;">Facture mensuelle</td><td style="padding:6px 0;font-size:13px;color:#0f172a;">${facture_mensuelle} €/mois</td></tr>` : ''}
+        ${message ? `<tr><td style="padding:6px 0;font-size:13px;color:#64748b;vertical-align:top;">Message</td><td style="padding:6px 0;font-size:13px;color:#0f172a;font-style:italic;">"${String(message).trim()}"</td></tr>` : ''}
+      </table>
+      <div style="margin:20px 0 0;padding:16px;background:#f8fafc;border-radius:10px;border-left:3px solid ${couleur};">
+        <p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#64748b;text-transform:uppercase;letter-spacing:0.5px;">Estimation calculée</p>
+        <p style="margin:0;font-size:15px;font-weight:700;color:#0f172a;">${estimation.nbPanneaux} panneaux · ${estimation.puissanceKwc} kWc · ${estimation.productionAnnuelle.toLocaleString('fr-FR')} kWh/an</p>
+        <p style="margin:4px 0 0;font-size:13px;color:${couleur};font-weight:600;">Fourchette : ${eur(estimation.fourchetteMin)} — ${eur(estimation.fourchetteMax)} TTC</p>
+      </div>
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid #f1f5f9;">
+        <a href="https://voltpilot.fr/leads" style="display:inline-block;padding:10px 20px;background:${couleur};color:white;text-decoration:none;border-radius:8px;font-size:13px;font-weight:600;">Voir dans ${companyNom}</a>
+      </div>
+    </div>
+    <p style="text-align:center;margin:16px 0 0;font-size:11px;color:#cbd5e1;">Notification automatique · VoltPilot</p>
+  </div>
+</body>
+</html>`,
+        })
+      }
+    } catch {
+      // Email non bloquant — ne pas faire échouer la réponse
+    }
 
     return NextResponse.json({
       success: true,
