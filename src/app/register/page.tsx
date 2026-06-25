@@ -51,7 +51,7 @@ export default function RegisterPage() {
           </div>
           <h2 className="text-4xl font-black text-white mb-4">Rejoignez VoltPilot</h2>
           <p className="text-lg leading-relaxed mb-8" style={{ color: '#4A6080' }}>
-            Des centaines d&apos;installateurs solaires font confiance à VoltPilot pour gérer leur activité.
+            Le logiciel de devis conçu pour les installateurs photovoltaïques. Simple, rapide, professionnel.
           </p>
           <div className="space-y-3">
             {[
@@ -68,10 +68,7 @@ export default function RegisterPage() {
             ))}
           </div>
         </div>
-        <div className="p-4 rounded-2xl" style={{ background: 'rgba(245,166,35,0.06)', border: '1px solid rgba(245,166,35,0.12)' }}>
-          <p className="text-sm italic" style={{ color: '#7A90A8' }}>&quot;VoltPilot m&apos;a fait gagner 5h par semaine sur mes devis. Je peux me concentrer sur mes chantiers.&quot;</p>
-          <p className="text-xs mt-2" style={{ color: '#4A6080' }}>— Marc D., installateur solaire à Lyon</p>
-        </div>
+        <p className="text-sm" style={{ color: '#1A3560' }}>© {new Date().getFullYear()} VoltPilot · Tous droits réservés</p>
       </div>
 
       {/* Right panel */}

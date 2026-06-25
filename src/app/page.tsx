@@ -15,9 +15,9 @@ export default function LandingPage() {
         </div>
 
         <div className="hidden md:flex items-center gap-7">
-          {['Fonctionnalités', 'Tarifs', 'Contact'].map(i => (
-            <a key={i} href="#" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '14px' }} className="hover:text-white transition-colors">{i}</a>
-          ))}
+          <a href="#fonctionnalites" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '14px' }} className="hover:text-white transition-colors">Fonctionnalités</a>
+          <a href="#tarifs" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '14px' }} className="hover:text-white transition-colors">Tarifs</a>
+          <a href="#contact" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '14px' }} className="hover:text-white transition-colors">Contact</a>
         </div>
 
         <div className="flex items-center gap-3">
@@ -144,13 +144,13 @@ export default function LandingPage() {
               >
                 Démarrer gratuitement <ArrowRight size={18} />
               </Link>
-              <Link
-                href="/dashboard"
+              <a
+                href="#apercu"
                 className="flex items-center gap-2 font-semibold rounded-xl transition-all"
                 style={{ color: 'rgba(255,255,255,0.7)', padding: '13px 20px', fontSize: '15px', border: '1px solid rgba(255,255,255,0.1)', background: 'rgba(255,255,255,0.04)' }}
               >
                 Voir la démo →
-              </Link>
+              </a>
             </div>
 
             <div className="flex items-center gap-6">
@@ -180,7 +180,7 @@ export default function LandingPage() {
       `}</style>
 
       {/* ── APP PREVIEW ───────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-8 pb-24">
+      <section id="apercu" className="max-w-6xl mx-auto px-8 pb-24">
         <div
           className="rounded-2xl overflow-hidden"
           style={{
@@ -261,7 +261,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── FEATURES ─────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-8 py-20">
+      <section id="fonctionnalites" className="max-w-7xl mx-auto px-8 py-20">
         <div className="text-center mb-14">
           <h2 className="font-black text-white mb-3" style={{ fontSize: '38px', letterSpacing: '-0.03em' }}>
             Conçu pour les pros du solaire
@@ -330,7 +330,9 @@ export default function LandingPage() {
       </section>
 
       {/* ── PRICING ──────────────────────────────── */}
-      <PricingSection />
+      <div id="tarifs">
+        <PricingSection />
+      </div>
 
       {/* ── CTA FINAL ────────────────────────────── */}
       <section className="max-w-4xl mx-auto px-8 pb-24 text-center">
@@ -338,7 +340,7 @@ export default function LandingPage() {
           Prêt à gagner du temps ?
         </h2>
         <p className="mb-8" style={{ color: 'rgba(255,255,255,0.4)', fontSize: '16px' }}>
-          Rejoignez des installateurs solaires qui font déjà confiance à VoltPilot.
+          Créez des devis solaires professionnels en quelques minutes. Sans engagement.
         </p>
         <Link
           href="/register"
@@ -353,7 +355,7 @@ export default function LandingPage() {
       </section>
 
       {/* ── FOOTER ───────────────────────────────── */}
-      <footer style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: '32px 0' }}>
+      <footer id="contact" style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: '40px 0' }}>
         <div className="flex flex-col items-center gap-3">
           <div className="flex items-center gap-2.5">
             <Image src="/logo.svg" alt="VoltPilot" width={28} height={28} />
@@ -362,9 +364,14 @@ export default function LandingPage() {
           <p style={{ color: 'rgba(255,255,255,0.18)', fontSize: '13px' }}>
             © {new Date().getFullYear()} VoltPilot · Logiciel de devis photovoltaïque · Fait en France
           </p>
-          <a href="mailto:VoltpilotPro@gmail.com" style={{ color: 'rgba(255,255,255,0.25)', fontSize: '13px' }} className="hover:text-white transition-colors">
-            VoltpilotPro@gmail.com
+          <a href="mailto:contact@voltpilot.fr" style={{ color: 'rgba(255,255,255,0.25)', fontSize: '13px' }} className="hover:text-white transition-colors">
+            contact@voltpilot.fr
           </a>
+          <div className="flex items-center gap-5 mt-1">
+            <Link href="/mentions-legales" style={{ color: 'rgba(255,255,255,0.2)', fontSize: '12px' }} className="hover:text-white transition-colors">Mentions légales</Link>
+            <Link href="/cgv" style={{ color: 'rgba(255,255,255,0.2)', fontSize: '12px' }} className="hover:text-white transition-colors">CGV</Link>
+            <Link href="/politique-confidentialite" style={{ color: 'rgba(255,255,255,0.2)', fontSize: '12px' }} className="hover:text-white transition-colors">Politique de confidentialité</Link>
+          </div>
         </div>
       </footer>
     </div>

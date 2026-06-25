@@ -106,7 +106,8 @@ export default function LoginPage() {
               />
             </div>
             <div className="flex items-center justify-end text-sm">
-              <a href="#" className="text-indigo-400 hover:text-indigo-300 transition-colors font-medium">Mot de passe oublié ?</a>
+              {/* TODO: implémenter reset mot de passe — pour l'instant redirige vers le support */}
+              <a href="mailto:contact@voltpilot.fr?subject=Réinitialisation mot de passe" style={{ color: '#F5A623' }} className="hover:opacity-80 transition-opacity font-medium">Mot de passe oublié ?</a>
             </div>
             <button
               type="submit"
