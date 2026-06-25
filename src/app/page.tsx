@@ -2,6 +2,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { CheckCircle, ArrowRight, FileText, Users, BarChart3, TrendingUp, Clock, Zap } from 'lucide-react'
 import { PricingSection } from '@/components/PricingSection'
+import { SolarSceneLoader } from '@/components/SolarSceneLoader'
 
 export default function LandingPage() {
   return (
@@ -33,84 +34,16 @@ export default function LandingPage() {
       {/* ── HERO ─────────────────────────────────── */}
       <section className="relative overflow-hidden" style={{ minHeight: '92vh', display: 'flex', alignItems: 'center' }}>
 
-        {/* 3D Solar panel array — background */}
-        <div className="absolute inset-0 flex items-center justify-end pr-0 pointer-events-none" style={{ overflow: 'hidden' }}>
-          <div
-            style={{
-              width: '640px',
-              height: '540px',
-              position: 'relative',
-              transform: 'perspective(900px) rotateX(52deg) rotateZ(-18deg)',
-              transformStyle: 'preserve-3d',
-              opacity: 0.55,
-              right: '-80px',
-              marginTop: '40px',
-            }}
-          >
-            {/* 5 × 6 grid of solar panels */}
-            {Array.from({ length: 30 }).map((_, i) => {
-              const col = i % 6
-              const row = Math.floor(i / 6)
-              const delay = `${(col * 0.12 + row * 0.08).toFixed(2)}s`
-              const intensity = Math.random() > 0.65
-              return (
-                <div
-                  key={i}
-                  style={{
-                    position: 'absolute',
-                    left: `${col * 108}px`,
-                    top: `${row * 108}px`,
-                    width: '100px',
-                    height: '100px',
-                    borderRadius: '6px',
-                    background: intensity
-                      ? 'linear-gradient(135deg, #1a3a6b 0%, #1e4d92 50%, #1a3a6b 100%)'
-                      : 'linear-gradient(135deg, #0f2545 0%, #1a3a6b 50%, #0f2545 100%)',
-                    border: '1px solid rgba(34,211,238,0.18)',
-                    boxShadow: intensity ? '0 0 20px rgba(34,211,238,0.12), inset 0 0 30px rgba(34,211,238,0.05)' : 'none',
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(4, 1fr)',
-                    gridTemplateRows: 'repeat(4, 1fr)',
-                    gap: '2px',
-                    padding: '4px',
-                    animationName: intensity ? 'panelPulse' : 'none',
-                    animationDuration: '3s',
-                    animationDelay: delay,
-                    animationIterationCount: 'infinite',
-                    animationTimingFunction: 'ease-in-out',
-                  }}
-                >
-                  {Array.from({ length: 16 }).map((_, j) => (
-                    <div
-                      key={j}
-                      style={{
-                        background: intensity && j % 5 === 0
-                          ? 'rgba(34,211,238,0.35)'
-                          : 'rgba(99,149,255,0.08)',
-                        borderRadius: '1px',
-                        transition: 'background 0.3s',
-                      }}
-                    />
-                  ))}
-                  {/* horizontal lines */}
-                  {[33, 50, 67].map(pct => (
-                    <div key={pct} style={{ position: 'absolute', left: '4px', right: '4px', top: `${pct}%`, height: '1px', background: 'rgba(34,211,238,0.1)' }} />
-                  ))}
-                  {[33, 50, 67].map(pct => (
-                    <div key={pct} style={{ position: 'absolute', top: '4px', bottom: '4px', left: `${pct}%`, width: '1px', background: 'rgba(34,211,238,0.1)' }} />
-                  ))}
-                </div>
-              )
-            })}
-          </div>
-
-          {/* Energy glow */}
-          <div style={{ position: 'absolute', right: '15%', top: '30%', width: '300px', height: '300px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(250,204,21,0.1) 0%, transparent 70%)', filter: 'blur(20px)', pointerEvents: 'none' }} />
-          <div style={{ position: 'absolute', right: '25%', top: '50%', width: '200px', height: '200px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(34,211,238,0.08) 0%, transparent 70%)', filter: 'blur(30px)', pointerEvents: 'none' }} />
+        {/* Three.js solar panel — desktop only, lazy loaded */}
+        <div className="absolute inset-0 pointer-events-none hidden md:block">
+          <SolarSceneLoader />
         </div>
 
-        {/* Radial bg glow */}
-        <div style={{ position: 'absolute', left: '-10%', top: '20%', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(250,204,21,0.05) 0%, transparent 60%)', pointerEvents: 'none' }} />
+        {/* Mobile fallback glow */}
+        <div className="absolute inset-0 pointer-events-none md:hidden" style={{ background: 'radial-gradient(ellipse at 80% 50%, rgba(34,211,238,0.06) 0%, transparent 60%)' }} />
+
+        {/* Left ambient glow (always visible) */}
+        <div style={{ position: 'absolute', left: '-8%', top: '25%', width: '420px', height: '420px', borderRadius: '50%', background: 'radial-gradient(circle, rgba(250,204,21,0.04) 0%, transparent 60%)', pointerEvents: 'none' }} />
 
         {/* Hero text */}
         <div className="relative z-10 max-w-7xl mx-auto px-8 w-full">
@@ -166,18 +99,6 @@ export default function LandingPage() {
         {/* bottom fade */}
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '120px', background: 'linear-gradient(to bottom, transparent, #0A0E1A)', pointerEvents: 'none' }} />
       </section>
-
-      {/* ── SOLAR PANEL ANIMATION CSS ─────────────── */}
-      <style>{`
-        @keyframes panelPulse {
-          0%, 100% { box-shadow: 0 0 10px rgba(250,204,21,0.06), inset 0 0 20px rgba(34,211,238,0.04); }
-          50% { box-shadow: 0 0 28px rgba(250,204,21,0.18), inset 0 0 40px rgba(34,211,238,0.1); border-color: rgba(34,211,238,0.3); }
-        }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-8px); }
-        }
-      `}</style>
 
       {/* ── APP PREVIEW ───────────────────────────── */}
       <section id="apercu" className="max-w-6xl mx-auto px-8 pb-24">
