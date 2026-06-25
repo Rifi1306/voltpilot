@@ -23,7 +23,7 @@ export default async function NouveauDossierPage() {
             className="w-10 h-10 rounded-xl flex items-center justify-center"
             style={{ background: 'rgba(245,158,11,0.12)' }}
           >
-            <Folder size={20} style={{ color: '#0ea5e9' }} />
+            <Folder size={20} style={{ color: '#22D3EE' }} />
           </div>
           <div>
             <h1 className="text-2xl font-bold text-white">Nouveau dossier</h1>
@@ -36,7 +36,7 @@ export default async function NouveauDossierPage() {
         <form action={createDossier} className="max-w-lg space-y-5">
           <div>
             <label className="block text-sm font-medium text-white mb-2">
-              Nom du dossier <span style={{ color: '#0ea5e9' }}>*</span>
+              Nom du dossier <span style={{ color: '#22D3EE' }}>*</span>
             </label>
             <input
               name="nom"
@@ -90,7 +90,7 @@ export default async function NouveauDossierPage() {
             <button
               type="submit"
               className="px-6 py-2.5 rounded-xl text-sm font-semibold text-white transition-all"
-              style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}
+              style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}
             >
               Créer le dossier
             </button>

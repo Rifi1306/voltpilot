@@ -9,7 +9,7 @@ import {
 } from 'recharts'
 import { TrendingUp } from 'lucide-react'
 
-const COLORS = ['#10b981', '#3b82f6', '#94a3b8', '#ef4444', '#8b5cf6']
+const COLORS = ['#10b981', '#3b82f6', '#94a3b8', '#ef4444', '#06B6D4']
 
 type SDevis = {
   id: string
@@ -121,15 +121,15 @@ export default function AnalyticsPage() {
               <AreaChart data={monthlyData}>
                 <defs>
                   <linearGradient id="ca" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#6366f1" stopOpacity={0.15} />
-                    <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+                    <stop offset="5%" stopColor="#22D3EE" stopOpacity={0.15} />
+                    <stop offset="95%" stopColor="#22D3EE" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
                 <XAxis dataKey="mois" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} tickFormatter={v => `${(v/1000).toFixed(0)}k€`} />
                 <Tooltip formatter={(v: unknown) => [formatCurrency(Number(v ?? 0)), 'CA']} contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0' }} />
-                <Area type="monotone" dataKey="montant" stroke="#6366f1" strokeWidth={2.5} fill="url(#ca)" dot={{ fill: '#6366f1', r: 4, strokeWidth: 0 }} />
+                <Area type="monotone" dataKey="montant" stroke="#22D3EE" strokeWidth={2.5} fill="url(#ca)" dot={{ fill: '#22D3EE', r: 4, strokeWidth: 0 }} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -144,7 +144,7 @@ export default function AnalyticsPage() {
                 <XAxis dataKey="mois" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} allowDecimals={false} />
                 <Tooltip contentStyle={{ borderRadius: '12px', border: '1px solid #e2e8f0' }} />
-                <Bar dataKey="devis" fill="#6366f1" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="devis" fill="#22D3EE" radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           </div>

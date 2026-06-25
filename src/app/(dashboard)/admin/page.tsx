@@ -45,9 +45,9 @@ export default function AdminPage() {
 
   const kpis = [
     { label: 'Utilisateurs', value: String(data.totalUsers), icon: Users, iconBg: 'rgba(79,70,229,0.1)', iconColor: '#4f46e5' },
-    { label: 'Devis total', value: String(data.totalDevis), icon: FileText, iconBg: 'rgba(14,165,233,0.1)', iconColor: '#0ea5e9' },
+    { label: 'Devis total', value: String(data.totalDevis), icon: FileText, iconBg: 'rgba(34,211,238,0.1)', iconColor: '#22D3EE' },
     { label: 'CA total (acceptés)', value: formatCurrency(data.totalCA), icon: Euro, iconBg: 'rgba(16,185,129,0.1)', iconColor: '#10b981' },
-    { label: 'Taux d\'acceptation', value: `${tauxAcceptation}%`, icon: CheckCircle2, iconBg: 'rgba(139,92,246,0.1)', iconColor: '#8b5cf6' },
+    { label: 'Taux d\'acceptation', value: `${tauxAcceptation}%`, icon: CheckCircle2, iconBg: 'rgba(34,211,238,0.1)', iconColor: '#06B6D4' },
   ]
 
   const statuses = [
@@ -114,7 +114,7 @@ export default function AdminPage() {
                 <p className="text-sm text-slate-400 text-center py-8">Aucun utilisateur</p>
               ) : data.topUsers.map((u, i) => (
                 <div key={i} className="flex items-center gap-3 px-6 py-3">
-                  <span className="text-xs font-black w-5 text-center" style={{ color: i < 3 ? '#0ea5e9' : '#d1d5db' }}>#{i + 1}</span>
+                  <span className="text-xs font-black w-5 text-center" style={{ color: i < 3 ? '#22D3EE' : '#d1d5db' }}>#{i + 1}</span>
                   <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold flex-shrink-0" style={{ background: 'linear-gradient(135deg, #4f46e5, #7c3aed)', fontSize: '11px' }}>
                     {(u.nom ?? '?').charAt(0).toUpperCase()}
                   </div>
@@ -152,7 +152,7 @@ export default function AdminPage() {
                 <tr key={u.id} style={{ borderBottom: '1px solid #f9fafb' }}>
                   <td className="px-6 py-3.5">
                     <div className="flex items-center gap-2.5">
-                      <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold flex-shrink-0" style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)', fontSize: '11px' }}>
+                      <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold flex-shrink-0" style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)', fontSize: '11px' }}>
                         {(u.nom ?? '?').charAt(0).toUpperCase()}
                       </div>
                       <span className="text-sm font-medium text-slate-800">{u.nom ?? '—'}</span>

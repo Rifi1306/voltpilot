@@ -23,7 +23,7 @@ export default function PolitiqueConfidentialite() {
               Le responsable du traitement des données personnelles est :<br /><br />
               <strong className="text-white">[À COMPLÉTER — Raison sociale]</strong><br />
               [À COMPLÉTER — Adresse du siège social]<br />
-              Email : <a href="mailto:contact@voltpilot.fr" style={{ color: '#F5A623' }}>contact@voltpilot.fr</a>
+              Email : <a href="mailto:contact@voltpilot.fr" style={{ color: '#22D3EE' }}>contact@voltpilot.fr</a>
             </p>
           </section>
 
@@ -94,7 +94,7 @@ export default function PolitiqueConfidentialite() {
               — <strong className="text-white">Droit d'opposition</strong> au traitement<br />
               — <strong className="text-white">Droit à la limitation</strong> du traitement<br /><br />
               Pour exercer ces droits, contactez-nous à :<br />
-              <a href="mailto:contact@voltpilot.fr" style={{ color: '#F5A623' }}>contact@voltpilot.fr</a><br /><br />
+              <a href="mailto:contact@voltpilot.fr" style={{ color: '#22D3EE' }}>contact@voltpilot.fr</a><br /><br />
               Vous pouvez également introduire une réclamation auprès de la CNIL : <span style={{ color: 'rgba(255,255,255,0.4)' }}>cnil.fr</span>
             </p>
           </section>

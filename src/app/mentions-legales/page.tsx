@@ -28,7 +28,7 @@ export default function MentionsLegales() {
               SIRET : [À COMPLÉTER]<br />
               RCS : [À COMPLÉTER]<br />
               N° TVA intracommunautaire : [À COMPLÉTER]<br /><br />
-              Email : <a href="mailto:contact@voltpilot.fr" style={{ color: '#F5A623' }}>contact@voltpilot.fr</a>
+              Email : <a href="mailto:contact@voltpilot.fr" style={{ color: '#22D3EE' }}>contact@voltpilot.fr</a>
             </p>
           </section>
 
@@ -60,7 +60,7 @@ export default function MentionsLegales() {
             <h2 className="text-xl font-bold text-white mb-4">5. Données personnelles</h2>
             <p style={{ color: 'rgba(255,255,255,0.55)' }}>
               Pour toute information relative au traitement de vos données personnelles, veuillez consulter notre{' '}
-              <Link href="/politique-confidentialite" style={{ color: '#F5A623' }}>Politique de confidentialité</Link>.
+              <Link href="/politique-confidentialite" style={{ color: '#22D3EE' }}>Politique de confidentialité</Link>.
             </p>
           </section>
 
@@ -75,7 +75,7 @@ export default function MentionsLegales() {
             <h2 className="text-xl font-bold text-white mb-4">7. Contact</h2>
             <p style={{ color: 'rgba(255,255,255,0.55)' }}>
               Pour toute question relative aux présentes mentions légales :<br />
-              <a href="mailto:contact@voltpilot.fr" style={{ color: '#F5A623' }}>contact@voltpilot.fr</a>
+              <a href="mailto:contact@voltpilot.fr" style={{ color: '#22D3EE' }}>contact@voltpilot.fr</a>
             </p>
           </section>
 

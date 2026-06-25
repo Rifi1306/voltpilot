@@ -116,7 +116,7 @@ export default function DashboardPage() {
       label: t.dashboard.revenue,
       value: formatCurrency(stats?.caTotal ?? 0),
       trend: `${stats?.devisAcceptes ?? 0} devis acceptés`,
-      icon: Euro, iconBg: 'rgba(14,165,233,0.1)', iconColor: '#0ea5e9', trendColor: '#10b981',
+      icon: Euro, iconBg: 'rgba(34,211,238,0.1)', iconColor: '#22D3EE', trendColor: '#10b981',
     },
     {
       label: t.dashboard.totalQuotes,
@@ -134,7 +134,7 @@ export default function DashboardPage() {
       label: t.dashboard.activeClients,
       value: String(stats?.totalClients ?? 0),
       trend: `${stats?.totalClients ?? 0} enregistrés`,
-      icon: Users, iconBg: 'rgba(139,92,246,0.1)', iconColor: '#8b5cf6', trendColor: '#10b981',
+      icon: Users, iconBg: 'rgba(34,211,238,0.1)', iconColor: '#06B6D4', trendColor: '#10b981',
     },
   ]
 
@@ -178,7 +178,7 @@ export default function DashboardPage() {
                 <p className="text-xs mt-0.5" style={{ color: '#9ca3af' }}>6 derniers mois — CA accepté</p>
               </div>
               <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg" style={{ background: '#f9fafb', border: '1px solid #e9eaec' }}>
-                <span className="w-2 h-2 rounded-full" style={{ background: '#0ea5e9' }} />
+                <span className="w-2 h-2 rounded-full" style={{ background: '#22D3EE' }} />
                 <span style={{ fontSize: '12px', color: '#6b7280', fontWeight: '500' }}>CA TTC</span>
               </div>
             </div>
@@ -186,8 +186,8 @@ export default function DashboardPage() {
               <AreaChart data={chartData}>
                 <defs>
                   <linearGradient id="gradCA" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#0ea5e9" stopOpacity={0.2} />
-                    <stop offset="100%" stopColor="#0ea5e9" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#22D3EE" stopOpacity={0.2} />
+                    <stop offset="100%" stopColor="#22D3EE" stopOpacity={0} />
                   </linearGradient>
                 </defs>
                 <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" />
@@ -198,7 +198,7 @@ export default function DashboardPage() {
                   contentStyle={{ borderRadius: '10px', border: '1px solid #e9eaec', boxShadow: '0 4px 16px rgba(0,0,0,0.08)', fontSize: '13px' }}
                   labelStyle={{ fontWeight: '700', color: '#0d1117', marginBottom: '4px' }}
                 />
-                <Area type="monotone" dataKey="montant" stroke="#0ea5e9" strokeWidth={2.5} fill="url(#gradCA)" dot={{ fill: '#0ea5e9', r: 3.5, strokeWidth: 0 }} activeDot={{ r: 5, fill: '#0ea5e9', stroke: 'white', strokeWidth: 2 }} />
+                <Area type="monotone" dataKey="montant" stroke="#22D3EE" strokeWidth={2.5} fill="url(#gradCA)" dot={{ fill: '#22D3EE', r: 3.5, strokeWidth: 0 }} activeDot={{ r: 5, fill: '#22D3EE', stroke: 'white', strokeWidth: 2 }} />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -228,7 +228,7 @@ export default function DashboardPage() {
           <div className="col-span-1 md:col-span-2 volt-card overflow-hidden">
             <div className="flex items-center justify-between px-5 py-4" style={{ borderBottom: '1px solid #f3f4f6' }}>
               <h2 className="font-bold text-sm" style={{ color: '#0d1117' }}>{t.dashboard.recentQuotes}</h2>
-              <Link href="/devis" className="flex items-center gap-1 text-xs font-semibold transition-colors" style={{ color: '#0ea5e9' }}>
+              <Link href="/devis" className="flex items-center gap-1 text-xs font-semibold transition-colors" style={{ color: '#22D3EE' }}>
                 {t.common.viewAll} <ArrowUpRight size={12} />
               </Link>
             </div>
@@ -256,7 +256,7 @@ export default function DashboardPage() {
                       </td>
                       <td className="px-5 py-3.5">
                         <div className="flex items-center gap-2">
-                          <div className="w-6 h-6 rounded-md flex items-center justify-center text-white font-bold" style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)', fontSize: '10px' }}>
+                          <div className="w-6 h-6 rounded-md flex items-center justify-center text-white font-bold" style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)', fontSize: '10px' }}>
                             {(d.clients?.nom ?? '?').charAt(0).toUpperCase()}
                           </div>
                           <span style={{ fontSize: '13px', color: '#374151', fontWeight: '500' }}>{d.clients?.nom ?? '—'}</span>
@@ -290,7 +290,7 @@ export default function DashboardPage() {
                 </div>
               ) : clients.slice(0, 6).map((c, i) => (
                 <Link key={c.id} href={`/clients/${c.id}`} className="flex items-center gap-3 p-3 rounded-xl transition-all hover:bg-blue-50 group">
-                  <span className="text-xs font-black w-5 flex-shrink-0 text-center" style={{ color: i < 3 ? '#0ea5e9' : '#d1d5db' }}>#{i + 1}</span>
+                  <span className="text-xs font-black w-5 flex-shrink-0 text-center" style={{ color: i < 3 ? '#22D3EE' : '#d1d5db' }}>#{i + 1}</span>
                   <div className="w-7 h-7 rounded-lg flex items-center justify-center text-white font-bold flex-shrink-0" style={{ background: 'linear-gradient(135deg, #4f46e5, #7c3aed)', fontSize: '11px' }}>
                     {c.nom.charAt(0).toUpperCase()}
                   </div>

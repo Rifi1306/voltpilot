@@ -33,7 +33,7 @@ export default async function DossiersPage({
         <Link
           href="/dossiers/nouveau"
           className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold text-white transition-all"
-          style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}
+          style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}
         >
           <Plus size={16} />
           Nouveau dossier
@@ -62,9 +62,9 @@ export default async function DossiersPage({
           <div className="flex flex-col items-center justify-center py-20 gap-3">
             <div
               className="w-14 h-14 rounded-2xl flex items-center justify-center"
-              style={{ background: 'rgba(14,165,233,0.1)' }}
+              style={{ background: 'rgba(34,211,238,0.1)' }}
             >
-              <Folder size={28} style={{ color: '#0ea5e9' }} />
+              <Folder size={28} style={{ color: '#22D3EE' }} />
             </div>
             <p className="text-white font-semibold text-base">
               {q ? 'Aucun résultat' : 'Aucun dossier'}
@@ -76,7 +76,7 @@ export default async function DossiersPage({
               <Link
                 href="/dossiers/nouveau"
                 className="mt-2 px-4 py-2 rounded-xl text-sm font-semibold text-white"
-                style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}
+                style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}
               >
                 Créer mon premier dossier
               </Link>
@@ -98,9 +98,9 @@ export default async function DossiersPage({
                     <div className="flex items-center gap-2.5">
                       <div
                         className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
-                        style={{ background: 'rgba(245,158,11,0.12)' }}
+                        style={{ background: 'rgba(250,204,21,0.12)' }}
                       >
-                        <Folder size={18} style={{ color: '#0ea5e9' }} />
+                        <Folder size={18} style={{ color: '#22D3EE' }} />
                       </div>
                       <div>
                         <p className="text-white font-semibold text-sm leading-tight">{d.nom}</p>

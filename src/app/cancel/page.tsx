@@ -8,7 +8,7 @@ export default function CancelPage() {
       style={{ background: '#060912' }}
     >
       <Link href="/" className="flex items-center gap-2 mb-12">
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>
+        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}>
           <Sun size={18} className="text-white" />
         </div>
         <span className="font-black text-white text-xl" style={{ letterSpacing: '-0.03em' }}>VoltPilot</span>

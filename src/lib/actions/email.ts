@@ -169,7 +169,7 @@ export async function sendDevisEmailAction(devisId: string, emailOverride?: stri
 
     const lignes = parseLignes(devis.lignes)
     const montantTTC = rawTTC(lignes, devis.remise ?? 0)
-    const couleur = profile?.couleur_primaire ?? '#0ea5e9'
+    const couleur = profile?.couleur_primaire ?? '#22D3EE'
     const companyNom = profile?.nom ?? 'Votre installateur solaire'
 
     const { error: emailError } = await resend.emails.send({

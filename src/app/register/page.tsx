@@ -42,11 +42,11 @@ export default function RegisterPage() {
         <div className="flex items-center gap-3">
           <img src="/logo.svg" alt="VoltPilot" width={40} height={40} />
           <span className="font-black text-xl tracking-tight">
-            <span style={{ color: '#F5A623' }}>Volt</span><span className="text-white">Pilot</span>
+            <span style={{ color: '#22D3EE' }}>Volt</span><span className="text-white">Pilot</span>
           </span>
         </div>
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-xs font-semibold" style={{ background: 'rgba(245,166,35,0.12)', color: '#F5A623', border: '1px solid rgba(245,166,35,0.25)' }}>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-xs font-semibold" style={{ background: 'rgba(34,211,238,0.12)', color: '#22D3EE', border: '1px solid rgba(34,211,238,0.25)' }}>
             ✨ 14 jours gratuits — sans CB
           </div>
           <h2 className="text-4xl font-black text-white mb-4">Rejoignez VoltPilot</h2>
@@ -63,7 +63,7 @@ export default function RegisterPage() {
               'Support client dédié',
             ].map(f => (
               <div key={f} className="flex items-center gap-2.5 text-sm" style={{ color: '#7A90A8' }}>
-                <CheckCircle size={14} style={{ color: '#F5A623' }} className="flex-shrink-0" /> {f}
+                <CheckCircle size={14} style={{ color: '#22D3EE' }} className="flex-shrink-0" /> {f}
               </div>
             ))}
           </div>
@@ -124,8 +124,8 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold text-white transition-all disabled:opacity-60"
-              style={{ background: 'linear-gradient(135deg, #F5A623, #f97316)' }}
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold transition-all disabled:opacity-60"
+              style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)', color: '#0A0E1A' }}
             >
               {loading
                 ? <><Loader2 size={16} className="animate-spin" /> Création du compte…</>
@@ -135,7 +135,7 @@ export default function RegisterPage() {
 
           <p className="text-center text-slate-500 text-sm mt-6">
             Déjà un compte ?{' '}
-            <Link href="/login" style={{ color: '#F5A623' }} className="font-semibold hover:opacity-80">Se connecter</Link>
+            <Link href="/login" style={{ color: '#22D3EE' }} className="font-semibold hover:opacity-80">Se connecter</Link>
           </p>
         </div>
       </div>

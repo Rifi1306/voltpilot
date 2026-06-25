@@ -82,16 +82,16 @@ export function PricingSection() {
             onClick={() => setAnnual(true)}
             className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all"
             style={{
-              background: annual ? 'rgba(14,165,233,0.15)' : 'transparent',
-              color: annual ? '#0ea5e9' : 'rgba(255,255,255,0.4)',
+              background: annual ? 'rgba(34,211,238,0.15)' : 'transparent',
+              color: annual ? '#22D3EE' : 'rgba(255,255,255,0.4)',
             }}
           >
             Annuel
             <span
               className="px-2 py-0.5 rounded-full text-xs font-bold"
               style={{
-                background: annual ? 'rgba(14,165,233,0.2)' : 'rgba(255,255,255,0.08)',
-                color: annual ? '#0ea5e9' : 'rgba(255,255,255,0.3)',
+                background: annual ? 'rgba(34,211,238,0.2)' : 'rgba(255,255,255,0.08)',
+                color: annual ? '#22D3EE' : 'rgba(255,255,255,0.3)',
               }}
             >
               −17%
@@ -122,14 +122,14 @@ export function PricingSection() {
                   ? 'linear-gradient(135deg, rgba(245,158,11,0.08), rgba(249,115,22,0.05))'
                   : 'rgba(255,255,255,0.03)',
                 border: plan.popular
-                  ? '1px solid rgba(14,165,233,0.35)'
+                  ? '1px solid rgba(34,211,238,0.35)'
                   : '1px solid rgba(255,255,255,0.07)',
               }}
             >
               {plan.popular && (
                 <div
-                  className="absolute -top-3 left-6 px-3 py-1 rounded-full text-xs font-bold text-white"
-                  style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}
+                  className="absolute -top-3 left-6 px-3 py-1 rounded-full text-xs font-bold"
+                  style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)', color: '#0A0E1A' }}
                 >
                   Recommandé
                 </div>
@@ -179,7 +179,7 @@ export function PricingSection() {
               <ul className="space-y-2.5 mb-7">
                 {plan.features.map(f => (
                   <li key={f} className="flex items-start gap-2" style={{ fontSize: '13.5px', color: 'rgba(255,255,255,0.6)' }}>
-                    <CheckCircle size={14} style={{ color: '#0ea5e9', flexShrink: 0, marginTop: '2px' }} />
+                    <CheckCircle size={14} style={{ color: '#22D3EE', flexShrink: 0, marginTop: '2px' }} />
                     {f}
                   </li>
                 ))}
@@ -194,9 +194,9 @@ export function PricingSection() {
                   fontSize: '14px',
                   ...(plan.popular
                     ? {
-                        background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)',
-                        color: 'white',
-                        boxShadow: '0 4px 18px rgba(14,165,233,0.35)',
+                        background: 'linear-gradient(135deg, #22D3EE, #06B6D4)',
+                        color: '#0A0E1A',
+                        boxShadow: '0 4px 18px rgba(34,211,238,0.35)',
                       }
                     : {
                         background: 'rgba(255,255,255,0.07)',

@@ -258,7 +258,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
               {/* Entreprise */}
               <div>
                 <div className="flex items-center gap-2 mb-3">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${profile?.couleur_primaire ?? '#0ea5e9'}, #8b5cf6)` }}>
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: `linear-gradient(135deg, ${profile?.couleur_primaire ?? '#22D3EE'}, #06B6D4)` }}>
                     <Sun size={20} className="text-white" />
                   </div>
                   <div>
@@ -275,7 +275,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
 
               {/* Numéro & dates */}
               <div className="text-right">
-                <div className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3" style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)', color: 'white' }}>
+                <div className="inline-block px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3" style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)', color: 'white' }}>
                   DEVIS
                 </div>
                 <h2 className="text-2xl font-bold text-slate-900 mb-1">{devis.numero}</h2>

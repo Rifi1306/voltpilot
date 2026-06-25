@@ -41,11 +41,11 @@ Retourne JSON : { "titre": "...", "contenu": "...", "hashtags": ["...", "..."] }
 
 function buildEmailHtml(posts: { type: string; titre: string; contenu: string; hashtags: string[] }[]): string {
   const postBlocks = posts.map(p => `
-    <div style="margin-bottom:32px;padding:24px;background:#f8fafc;border-radius:12px;border-left:4px solid #6366f1;">
-      <p style="margin:0 0 4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#6366f1;">${p.type.replace(/_/g, ' ')}</p>
+    <div style="margin-bottom:32px;padding:24px;background:#f8fafc;border-radius:12px;border-left:4px solid #22D3EE;">
+      <p style="margin:0 0 4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:1px;color:#22D3EE;">${p.type.replace(/_/g, ' ')}</p>
       <h3 style="margin:0 0 12px;font-size:16px;color:#0f172a;">${p.titre}</h3>
       <p style="margin:0 0 16px;font-size:14px;color:#475569;line-height:1.7;white-space:pre-line;">${p.contenu}</p>
-      <p style="margin:0;font-size:13px;color:#6366f1;">${p.hashtags.join(' ')}</p>
+      <p style="margin:0;font-size:13px;color:#22D3EE;">${p.hashtags.join(' ')}</p>
     </div>
   `).join('')
 
@@ -57,7 +57,7 @@ function buildEmailHtml(posts: { type: string; titre: string; contenu: string; h
   <div style="max-width:600px;margin:40px auto;background:#ffffff;border-radius:16px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,0.08);">
 
     <!-- Header -->
-    <div style="background:linear-gradient(135deg,#0ea5e9,#8b5cf6);padding:32px 40px;">
+    <div style="background:linear-gradient(135deg,#22D3EE,#06B6D4);padding:32px 40px;">
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px;">
         <div style="width:36px;height:36px;background:rgba(255,255,255,0.2);border-radius:8px;display:flex;align-items:center;justify-content:center;">
           ☀️
@@ -77,9 +77,9 @@ function buildEmailHtml(posts: { type: string; titre: string; contenu: string; h
 
       ${postBlocks}
 
-      <div style="margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(99,102,241,0.06),rgba(139,92,246,0.04));border-radius:12px;text-align:center;">
+      <div style="margin-top:32px;padding:20px;background:linear-gradient(135deg,rgba(34,211,238,0.06),rgba(34,211,238,0.04));border-radius:12px;text-align:center;">
         <a href="https://voltpilot-flax.vercel.app/agents"
-           style="display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:white;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px;">
+           style="display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#22D3EE,#06B6D4);color:white;text-decoration:none;border-radius:8px;font-weight:600;font-size:14px;">
           Voir le dashboard Agents IA
         </a>
       </div>

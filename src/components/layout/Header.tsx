@@ -31,7 +31,7 @@ export function Header({ title, subtitle, action }: HeaderProps) {
             placeholder={t.common.search}
             className="pl-8 pr-4 py-2 text-sm rounded-lg w-52 transition-all outline-none"
             style={{ background: '#fff', border: '1.5px solid #e4e7ec', color: '#374151', fontSize: '13px' }}
-            onFocus={(e) => { e.target.style.borderColor = '#0ea5e9'; e.target.style.boxShadow = '0 0 0 3px rgba(14,165,233,0.1)' }}
+            onFocus={(e) => { e.target.style.borderColor = '#22D3EE'; e.target.style.boxShadow = '0 0 0 3px rgba(34,211,238,0.1)' }}
             onBlur={(e) => { e.target.style.borderColor = '#e4e7ec'; e.target.style.boxShadow = 'none' }}
           />
         </div>

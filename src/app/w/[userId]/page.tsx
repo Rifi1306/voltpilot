@@ -22,7 +22,7 @@ export default async function WidgetPage({ params }: { params: Promise<{ userId:
     <WidgetForm
       installerId={userId}
       companyNom={profile.nom ?? 'Votre installateur solaire'}
-      couleur={profile.couleur_primaire ?? '#0ea5e9'}
+      couleur={profile.couleur_primaire ?? '#22D3EE'}
       showPrice={profile.widget_show_price ?? true}
     />
   )

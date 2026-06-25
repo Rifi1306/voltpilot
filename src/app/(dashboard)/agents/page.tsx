@@ -85,7 +85,7 @@ export default function AgentsPage() {
         {/* Status cards */}
         <div className="grid grid-cols-2 gap-4">
           <div className="volt-card p-5 flex items-center gap-4">
-            <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, rgba(99,102,241,0.15), rgba(139,92,246,0.1))' }}>
+            <div className="w-12 h-12 rounded-2xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, rgba(34,211,238,0.15), rgba(139,92,246,0.1))' }}>
               <BarChart3 size={22} className="text-indigo-500" />
             </div>
             <div>
@@ -179,7 +179,7 @@ export default function AgentsPage() {
               <div key={item.id} className="border border-slate-100 rounded-xl p-4">
                 <div className="flex items-start justify-between gap-3 mb-2">
                   <div>
-                    <span className="badge" style={{ background: 'rgba(99,102,241,0.08)', color: '#6366f1', border: '1px solid rgba(99,102,241,0.15)', fontSize: '11px' }}>
+                    <span className="badge" style={{ background: 'rgba(34,211,238,0.08)', color: '#22D3EE', border: '1px solid rgba(34,211,238,0.15)', fontSize: '11px' }}>
                       {item.type.replace(/_/g, ' ')}
                     </span>
                     <span className="ml-2 text-xs text-slate-400">Score: {item.score_engagement}/100</span>
@@ -197,7 +197,7 @@ export default function AgentsPage() {
                 {item.hashtags?.length > 0 && (
                   <div className="flex flex-wrap gap-1 mb-3">
                     {item.hashtags.map(h => (
-                      <span key={h} className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(99,102,241,0.06)', color: '#6366f1' }}>{h}</span>
+                      <span key={h} className="text-xs px-2 py-0.5 rounded-full" style={{ background: 'rgba(34,211,238,0.06)', color: '#22D3EE' }}>{h}</span>
                     ))}
                   </div>
                 )}

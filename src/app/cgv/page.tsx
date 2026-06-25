@@ -34,7 +34,7 @@ export default function CGV() {
           <section>
             <h2 className="text-xl font-bold text-white mb-4">3. Tarifs et abonnements</h2>
             <p style={{ color: 'rgba(255,255,255,0.55)' }}>
-              Les tarifs en vigueur sont affichés sur la page <Link href="/#tarifs" style={{ color: '#F5A623' }}>Tarifs</Link> du site. VoltPilot propose :<br /><br />
+              Les tarifs en vigueur sont affichés sur la page <Link href="/#tarifs" style={{ color: '#22D3EE' }}>Tarifs</Link> du site. VoltPilot propose :<br /><br />
               — Un <strong className="text-white">essai gratuit de 14 jours</strong> sans engagement ni carte bancaire requise.<br />
               — Des abonnements mensuels ou annuels selon les plans disponibles.<br /><br />
               Tous les prix sont indiqués en euros (€) hors taxes (HT). La TVA applicable est celle en vigueur au jour de la facturation.
@@ -95,7 +95,7 @@ export default function CGV() {
             <h2 className="text-xl font-bold text-white mb-4">11. Contact</h2>
             <p style={{ color: 'rgba(255,255,255,0.55)' }}>
               Pour toute question relative aux présentes CGV :<br />
-              <a href="mailto:contact@voltpilot.fr" style={{ color: '#F5A623' }}>contact@voltpilot.fr</a>
+              <a href="mailto:contact@voltpilot.fr" style={{ color: '#22D3EE' }}>contact@voltpilot.fr</a>
             </p>
           </section>
 

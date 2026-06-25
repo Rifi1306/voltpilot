@@ -136,8 +136,8 @@ function suggestOnduleur(params: {
       titre: 'Onduleur string triphasé recommandé',
       raison: 'L\'installation est raccordée en triphasé. Un onduleur string triphasé assure un équilibrage optimal des phases.',
       produitIdx: 8,
-      couleur: '#0ea5e9',
-      bg: 'rgba(14,165,233,0.08)',
+      couleur: '#22D3EE',
+      bg: 'rgba(34,211,238,0.08)',
     }
   }
 
@@ -147,8 +147,8 @@ function suggestOnduleur(params: {
     titre: 'Onduleur string recommandé',
     raison: 'Installation sans ombrage ni batterie en monophasé : l\'onduleur string centralisé est la solution optimale en rapport qualité/prix.',
     produitIdx: idx,
-    couleur: '#0ea5e9',
-    bg: 'rgba(14,165,233,0.06)',
+    couleur: '#22D3EE',
+    bg: 'rgba(34,211,238,0.06)',
   }
 }
 
@@ -190,7 +190,7 @@ function Toggle({ checked, onChange }: { checked: boolean; onChange: (v: boolean
   return (
     <button type="button" onClick={() => onChange(!checked)}
       className="w-11 h-6 rounded-full flex items-center px-0.5 transition-colors flex-shrink-0"
-      style={{ background: checked ? '#0ea5e9' : '#e2e8f0' }}>
+      style={{ background: checked ? '#22D3EE' : '#e2e8f0' }}>
       <div className={`w-5 h-5 rounded-full bg-white shadow transition-transform ${checked ? 'translate-x-5' : ''}`} />
     </button>
   )
@@ -204,8 +204,8 @@ function SectionHeader({
       className="w-full flex items-center justify-between px-6 py-4 hover:bg-slate-50/60 transition-colors">
       <div className="flex items-center gap-3">
         <span className="w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center text-white flex-shrink-0"
-          style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>{num}</span>
-        <Icon size={15} style={{ color: '#0ea5e9' }} className="flex-shrink-0" />
+          style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}>{num}</span>
+        <Icon size={15} style={{ color: '#22D3EE' }} className="flex-shrink-0" />
         <div className="text-left">
           <p className="font-bold text-slate-900 text-sm">{title}</p>
           {subtitle && <p className="text-xs text-slate-400">{subtitle}</p>}
@@ -440,7 +440,7 @@ export default function NouveauDevisPage() {
         <section className="bg-white rounded-2xl border border-slate-100 shadow-sm overflow-hidden">
           <div className="flex items-center gap-3 px-6 py-4 border-b border-slate-50">
             <span className="w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center text-white"
-              style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>1</span>
+              style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}>1</span>
             <h2 className="font-bold text-slate-900">Client & Projet</h2>
           </div>
 
@@ -453,9 +453,9 @@ export default function NouveauDevisPage() {
                   <button key={s} type="button" onClick={() => set('segment', s)}
                     className="flex-1 py-2.5 rounded-xl text-sm font-semibold border transition-all"
                     style={{
-                      background: draft.segment === s ? 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' : '#fff',
+                      background: draft.segment === s ? 'linear-gradient(135deg, #22D3EE, #06B6D4)' : '#fff',
                       color: draft.segment === s ? '#fff' : '#64748b',
-                      border: draft.segment === s ? '1.5px solid #0ea5e9' : '1.5px solid #e4e7ec',
+                      border: draft.segment === s ? '1.5px solid #22D3EE' : '1.5px solid #e4e7ec',
                     }}>
                     {s}
                   </button>
@@ -589,21 +589,21 @@ export default function NouveauDevisPage() {
 
               {/* Estimation / PVGIS inline */}
               {estimation && draft.surface > 0 && (
-                <div className="mt-5 rounded-xl overflow-hidden" style={{ border: '1px solid rgba(14,165,233,0.2)' }}>
+                <div className="mt-5 rounded-xl overflow-hidden" style={{ border: '1px solid rgba(34,211,238,0.2)' }}>
                   {/* Header row */}
                   <div className="flex items-center justify-between px-4 py-3"
-                    style={{ background: 'linear-gradient(135deg, rgba(14,165,233,0.07), rgba(139,92,246,0.05))' }}>
+                    style={{ background: 'linear-gradient(135deg, rgba(34,211,238,0.07), rgba(34,211,238,0.05))' }}>
                     <div className="flex items-center gap-2">
                       {pvgisResult
-                        ? <><Satellite size={13} style={{ color: '#0ea5e9' }} /><span className="text-xs font-bold text-slate-700">Données PVGIS réelles</span><span className="text-xs px-2 py-0.5 rounded-full font-semibold" style={{ background: '#dcfce7', color: '#15803d' }}>✓ JRC · EU</span></>
-                        : <><Sun size={13} style={{ color: '#0ea5e9' }} /><span className="text-xs font-bold text-slate-700">Estimation de production</span><span className="text-xs text-slate-400">(approximatif)</span></>
+                        ? <><Satellite size={13} style={{ color: '#22D3EE' }} /><span className="text-xs font-bold text-slate-700">Données PVGIS réelles</span><span className="text-xs px-2 py-0.5 rounded-full font-semibold" style={{ background: '#dcfce7', color: '#15803d' }}>✓ JRC · EU</span></>
+                        : <><Sun size={13} style={{ color: '#22D3EE' }} /><span className="text-xs font-bold text-slate-700">Estimation de production</span><span className="text-xs text-slate-400">(approximatif)</span></>
                       }
                     </div>
                     <div className="flex items-center gap-2">
                       {draft.codePostal?.length === 5 && (
                         <button type="button" onClick={fetchPVGIS} disabled={pvgisLoading}
                           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold text-white transition-all disabled:opacity-60"
-                          style={{ background: pvgisResult ? '#64748b' : 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>
+                          style={{ background: pvgisResult ? '#64748b' : 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}>
                           {pvgisLoading
                             ? <><Loader2 size={11} className="animate-spin" /> Calcul…</>
                             : <><Satellite size={11} /> {pvgisResult ? 'Recalculer PVGIS' : 'Données PVGIS réelles'}</>}
@@ -708,9 +708,9 @@ export default function NouveauDevisPage() {
                       <button key={a} type="button" onClick={() => set('alimentation', a)}
                         className="flex-1 py-2.5 rounded-xl text-sm font-semibold border transition-all"
                         style={{
-                          background: draft.alimentation === a ? 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' : '#fff',
+                          background: draft.alimentation === a ? 'linear-gradient(135deg, #22D3EE, #06B6D4)' : '#fff',
                           color: draft.alimentation === a ? '#fff' : '#64748b',
-                          border: draft.alimentation === a ? '1.5px solid #0ea5e9' : '1.5px solid #e4e7ec',
+                          border: draft.alimentation === a ? '1.5px solid #22D3EE' : '1.5px solid #e4e7ec',
                         }}>
                         {a}
                       </button>
@@ -771,13 +771,13 @@ export default function NouveauDevisPage() {
                       <button key={o.val} type="button" onClick={() => set('objectifPrincipal', o.val)}
                         className="w-full flex items-center gap-3 p-3 rounded-xl border text-left transition-all"
                         style={{
-                          background: draft.objectifPrincipal === o.val ? 'rgba(14,165,233,0.06)' : '#fff',
-                          border: draft.objectifPrincipal === o.val ? '1.5px solid #0ea5e9' : '1.5px solid #e4e7ec',
+                          background: draft.objectifPrincipal === o.val ? 'rgba(34,211,238,0.06)' : '#fff',
+                          border: draft.objectifPrincipal === o.val ? '1.5px solid #22D3EE' : '1.5px solid #e4e7ec',
                         }}>
                         <div className="w-4 h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0"
-                          style={{ borderColor: draft.objectifPrincipal === o.val ? '#0ea5e9' : '#d1d5db' }}>
+                          style={{ borderColor: draft.objectifPrincipal === o.val ? '#22D3EE' : '#d1d5db' }}>
                           {draft.objectifPrincipal === o.val && (
-                            <div className="w-2 h-2 rounded-full" style={{ background: '#0ea5e9' }} />
+                            <div className="w-2 h-2 rounded-full" style={{ background: '#22D3EE' }} />
                           )}
                         </div>
                         <div>
@@ -793,7 +793,7 @@ export default function NouveauDevisPage() {
                   <div>
                     <label className="block text-sm font-semibold text-slate-700 mb-3">Batterie de stockage</label>
                     <div className="flex items-center gap-3 p-3 rounded-xl border"
-                      style={{ border: draft.besoinBatterie ? '1.5px solid #0ea5e9' : '1.5px solid #e4e7ec', background: draft.besoinBatterie ? 'rgba(14,165,233,0.06)' : '#fff' }}>
+                      style={{ border: draft.besoinBatterie ? '1.5px solid #22D3EE' : '1.5px solid #e4e7ec', background: draft.besoinBatterie ? 'rgba(34,211,238,0.06)' : '#fff' }}>
                       <Toggle checked={draft.besoinBatterie} onChange={v => set('besoinBatterie', v)} />
                       <div>
                         <p className="text-sm font-semibold text-slate-800">Inclure une batterie</p>
@@ -809,11 +809,11 @@ export default function NouveauDevisPage() {
                         <button key={b} type="button" onClick={() => toggleBesoin(b)}
                           className="flex items-center gap-2 p-2.5 rounded-xl border text-left text-xs font-semibold transition-all"
                           style={{
-                            background: draft.besoinsFuturs.includes(b) ? 'rgba(14,165,233,0.06)' : '#fff',
-                            border: draft.besoinsFuturs.includes(b) ? '1.5px solid #0ea5e9' : '1.5px solid #e4e7ec',
-                            color: draft.besoinsFuturs.includes(b) ? '#0ea5e9' : '#64748b',
+                            background: draft.besoinsFuturs.includes(b) ? 'rgba(34,211,238,0.06)' : '#fff',
+                            border: draft.besoinsFuturs.includes(b) ? '1.5px solid #22D3EE' : '1.5px solid #e4e7ec',
+                            color: draft.besoinsFuturs.includes(b) ? '#22D3EE' : '#64748b',
                           }}>
-                          {draft.besoinsFuturs.includes(b) && <CheckCircle size={12} style={{ color: '#0ea5e9' }} className="flex-shrink-0" />}
+                          {draft.besoinsFuturs.includes(b) && <CheckCircle size={12} style={{ color: '#22D3EE' }} className="flex-shrink-0" />}
                           {b}
                         </button>
                       ))}
@@ -858,14 +858,14 @@ export default function NouveauDevisPage() {
           <div className="flex items-center justify-between px-6 py-4 border-b border-slate-50">
             <div className="flex items-center gap-3">
               <span className="w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center text-white"
-                style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>5</span>
+                style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}>5</span>
               <h2 className="font-bold text-slate-900">Lignes du devis</h2>
             </div>
             <div className="flex gap-2">
               <div className="relative">
                 <button onClick={() => setShowCatalogue(!showCatalogue)}
                   className="btn-secondary text-xs flex items-center gap-1.5">
-                  <Zap size={13} style={{ color: '#0ea5e9' }} /> Catalogue <ChevronDown size={12} />
+                  <Zap size={13} style={{ color: '#22D3EE' }} /> Catalogue <ChevronDown size={12} />
                 </button>
                 {showCatalogue && (
                   <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl shadow-xl border border-slate-100 z-20 max-h-80 overflow-y-auto scrollbar-thin">
@@ -975,7 +975,7 @@ export default function NouveauDevisPage() {
                 <span className="text-xl tabular-nums">{formatCurrency(totaux.montantTTC)}</span>
               </div>
               {draft.acompte > 0 && (
-                <div className="flex justify-between text-sm font-semibold" style={{ color: '#0ea5e9' }}>
+                <div className="flex justify-between text-sm font-semibold" style={{ color: '#22D3EE' }}>
                   <span>Acompte ({draft.acompte}%)</span>
                   <span className="tabular-nums">{formatCurrency(totaux.montantTTC * draft.acompte / 100)}</span>
                 </div>
@@ -988,7 +988,7 @@ export default function NouveauDevisPage() {
         <section className="bg-white rounded-2xl border border-slate-100 shadow-sm p-6">
           <div className="flex items-center gap-3 mb-4">
             <span className="w-6 h-6 rounded-full text-xs font-bold flex items-center justify-center text-white"
-              style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>6</span>
+              style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}>6</span>
             <h2 className="font-bold text-slate-900">Conditions & Notes</h2>
           </div>
           <div className="grid grid-cols-2 gap-4">

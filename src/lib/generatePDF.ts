@@ -63,7 +63,7 @@ function fmtDate(iso: string): string {
 export function generateDevisPDF(devis: DevisForPDF, profile: ProfileForPDF): void {
   const doc = new jsPDF({ unit: 'mm', format: 'a4' })
   const W = 210
-  const [cr, cg, cb] = hexToRgb(profile.couleur_primaire ?? '#0ea5e9')
+  const [cr, cg, cb] = hexToRgb(profile.couleur_primaire ?? '#22D3EE')
   const client = devis.clients
   const lignes = parseLignes(devis.lignes)
   const remiseGlobale = devis.remise ?? 0

@@ -53,7 +53,7 @@ const DEFAULT_FORM: Form = {
   mentions_legales: '',
   conditions_paiement_defaut: '30 jours net',
   validite_devis_defaut: '30',
-  couleur_primaire: '#0ea5e9',
+  couleur_primaire: '#22D3EE',
   widget_show_price: true,
 }
 
@@ -84,7 +84,7 @@ export default function SettingsPage() {
           mentions_legales: p.mentions_legales ?? '',
           conditions_paiement_defaut: p.conditions_paiement_defaut ?? '30 jours net',
           validite_devis_defaut: String(p.validite_devis_defaut ?? 30),
-          couleur_primaire: p.couleur_primaire ?? '#0ea5e9',
+          couleur_primaire: p.couleur_primaire ?? '#22D3EE',
           widget_show_price: p.widget_show_price ?? true,
         })
       }
@@ -140,7 +140,7 @@ export default function SettingsPage() {
   const baseUrl = process.env.NEXT_PUBLIC_URL ?? 'https://voltpilot.fr'
   const embedCode = userId ? buildEmbedCode(userId, baseUrl) : '…chargement…'
 
-  const buttonCode = userId ? buildButtonCode(userId, baseUrl, form.couleur_primaire || '#0ea5e9') : '…chargement…'
+  const buttonCode = userId ? buildButtonCode(userId, baseUrl, form.couleur_primaire || '#22D3EE') : '…chargement…'
 
   const handleCopy = () => {
     navigator.clipboard.writeText(embedCode)
@@ -167,7 +167,7 @@ export default function SettingsPage() {
           <div className="flex items-start gap-6 mb-6">
             {/* Logo preview */}
             <div className="w-20 h-20 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden border border-slate-200"
-              style={{ background: logoDataUrl ? '#fff' : (form.couleur_primaire || '#0ea5e9') }}>
+              style={{ background: logoDataUrl ? '#fff' : (form.couleur_primaire || '#22D3EE') }}>
               {logoDataUrl
                 ? <img src={logoDataUrl} alt="Logo" className="w-full h-full object-contain p-1" />
                 : <Sun size={36} className="text-white" />}
@@ -194,9 +194,9 @@ export default function SettingsPage() {
 
           {/* Signature toggle */}
           <div className="flex items-center justify-between p-4 rounded-xl border mb-6"
-            style={{ border: signatureActive ? '1.5px solid #0ea5e9' : '1.5px solid #e4e7ec', background: signatureActive ? 'rgba(14,165,233,0.04)' : '#fafafa' }}>
+            style={{ border: signatureActive ? '1.5px solid #22D3EE' : '1.5px solid #e4e7ec', background: signatureActive ? 'rgba(34,211,238,0.04)' : '#fafafa' }}>
             <div className="flex items-center gap-3">
-              <PenLine size={16} style={{ color: '#0ea5e9' }} />
+              <PenLine size={16} style={{ color: '#22D3EE' }} />
               <div>
                 <p className="text-sm font-semibold text-slate-800">Zone de signature sur les devis PDF</p>
                 <p className="text-xs text-slate-400">Ajoute deux blocs signature (installateur + client) en bas du PDF</p>
@@ -204,7 +204,7 @@ export default function SettingsPage() {
             </div>
             <button type="button" onClick={toggleSignature}
               className="w-11 h-6 rounded-full flex items-center px-0.5 transition-colors flex-shrink-0"
-              style={{ background: signatureActive ? '#0ea5e9' : '#e2e8f0' }}>
+              style={{ background: signatureActive ? '#22D3EE' : '#e2e8f0' }}>
               <div className={`w-5 h-5 rounded-full bg-white shadow transition-transform ${signatureActive ? 'translate-x-5' : ''}`} />
             </button>
           </div>
@@ -283,7 +283,7 @@ export default function SettingsPage() {
         {/* Abonnement */}
         <div className="bg-white rounded-2xl border border-slate-100 p-6">
           <h2 className="font-bold text-slate-900 mb-4">Mon abonnement</h2>
-          <div className="flex items-center justify-between p-4 rounded-xl" style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.07), rgba(249,115,22,0.04))', border: '1px solid rgba(14,165,233,0.2)' }}>
+          <div className="flex items-center justify-between p-4 rounded-xl" style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.07), rgba(249,115,22,0.04))', border: '1px solid rgba(34,211,238,0.2)' }}>
             <div>
               <p className="font-bold text-slate-900">Plan Pro</p>
               <p className="text-sm text-slate-500">Devis illimités · Clients illimités · 49€/mois</p>
@@ -303,7 +303,7 @@ export default function SettingsPage() {
 
           {/* Toggle affichage prix */}
           <div className="flex items-center justify-between p-4 rounded-xl border mb-5"
-            style={{ border: form.widget_show_price ? '1.5px solid #0ea5e9' : '1.5px solid #e4e7ec', background: form.widget_show_price ? 'rgba(14,165,233,0.04)' : '#fafafa' }}>
+            style={{ border: form.widget_show_price ? '1.5px solid #22D3EE' : '1.5px solid #e4e7ec', background: form.widget_show_price ? 'rgba(34,211,238,0.04)' : '#fafafa' }}>
             <div>
               <p className="text-sm font-semibold text-slate-800">Afficher la fourchette de prix aux visiteurs</p>
               <p className="text-xs text-slate-400">Si désactivé, l&apos;estimation de production reste visible mais le prix est masqué</p>
@@ -312,7 +312,7 @@ export default function SettingsPage() {
               type="button"
               onClick={() => setForm(prev => ({ ...prev, widget_show_price: !prev.widget_show_price }))}
               className="w-11 h-6 rounded-full flex items-center px-0.5 transition-colors flex-shrink-0 ml-4"
-              style={{ background: form.widget_show_price ? '#0ea5e9' : '#e2e8f0' }}
+              style={{ background: form.widget_show_price ? '#22D3EE' : '#e2e8f0' }}
             >
               <div className={`w-5 h-5 rounded-full bg-white shadow transition-transform ${form.widget_show_price ? 'translate-x-5' : ''}`} />
             </button>
@@ -352,7 +352,7 @@ export default function SettingsPage() {
                 <a
                   href={`/w/${userId}`}
                   target="_blank"
-                  style={{ display: 'inline-block', background: form.couleur_primaire || '#0ea5e9', color: 'white', padding: '12px 24px', borderRadius: '10px', fontFamily: 'sans-serif', fontSize: '14px', fontWeight: 700, textDecoration: 'none' }}
+                  style={{ display: 'inline-block', background: form.couleur_primaire || '#22D3EE', color: 'white', padding: '12px 24px', borderRadius: '10px', fontFamily: 'sans-serif', fontSize: '14px', fontWeight: 700, textDecoration: 'none' }}
                 >
                   ☀️ Demander un devis solaire gratuit
                 </a>

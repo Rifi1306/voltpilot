@@ -32,7 +32,7 @@ function LeadCard({ lead, onStatusChange }: { lead: Lead; onStatusChange: (id: s
       <div className="p-5">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-start gap-4 flex-1 min-w-0">
-            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-sm text-white" style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>
+            <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 font-bold text-sm text-white" style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}>
               {lead.nom.charAt(0).toUpperCase()}
             </div>
             <div className="min-w-0 flex-1">
@@ -76,7 +76,7 @@ function LeadCard({ lead, onStatusChange }: { lead: Lead; onStatusChange: (id: s
             <Link
               href={`/devis/nouveau?lead_nom=${encodeURIComponent(lead.nom)}&lead_email=${encodeURIComponent(lead.email)}&lead_tel=${encodeURIComponent(lead.telephone)}`}
               className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold text-white transition-colors whitespace-nowrap"
-              style={{ background: '#0ea5e9' }}
+              style={{ background: '#22D3EE' }}
             >
               Convertir en devis <ArrowRight size={12} />
             </Link>
@@ -179,7 +179,7 @@ export default function LeadsPage() {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4">
           {[
-            { label: 'Total reçus', value: leads.length, icon: Zap, color: '#0ea5e9' },
+            { label: 'Total reçus', value: leads.length, icon: Zap, color: '#22D3EE' },
             { label: 'Nouveaux', value: nouveaux, icon: MessageSquare, color: '#ef4444' },
             { label: 'Convertis', value: leads.filter(l => l.status === 'converti').length, icon: CheckCircle2, color: '#22c55e' },
           ].map(s => (

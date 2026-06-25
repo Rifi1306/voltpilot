@@ -37,7 +37,7 @@ export default function LoginPage() {
         <div className="flex items-center gap-3">
           <img src="/logo.svg" alt="VoltPilot" width={40} height={40} />
           <span className="font-black text-xl tracking-tight">
-            <span style={{ color: '#F5A623' }}>Volt</span><span className="text-white">Pilot</span>
+            <span style={{ color: '#22D3EE' }}>Volt</span><span className="text-white">Pilot</span>
           </span>
         </div>
         <div>
@@ -67,7 +67,7 @@ export default function LoginPage() {
           <div className="lg:hidden flex items-center gap-3 mb-8">
             <img src="/logo.svg" alt="VoltPilot" width={32} height={32} />
             <span className="font-black tracking-tight">
-              <span style={{ color: '#F5A623' }}>Volt</span><span className="text-white">Pilot</span>
+              <span style={{ color: '#22D3EE' }}>Volt</span><span className="text-white">Pilot</span>
             </span>
           </div>
 
@@ -107,13 +107,13 @@ export default function LoginPage() {
             </div>
             <div className="flex items-center justify-end text-sm">
               {/* TODO: implémenter reset mot de passe — pour l'instant redirige vers le support */}
-              <a href="mailto:contact@voltpilot.fr?subject=Réinitialisation mot de passe" style={{ color: '#F5A623' }} className="hover:opacity-80 transition-opacity font-medium">Mot de passe oublié ?</a>
+              <a href="mailto:contact@voltpilot.fr?subject=Réinitialisation mot de passe" style={{ color: '#22D3EE' }} className="hover:opacity-80 transition-opacity font-medium">Mot de passe oublié ?</a>
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold text-white transition-all disabled:opacity-60"
-              style={{ background: 'linear-gradient(135deg, #F5A623, #f97316)' }}
+              className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold transition-all disabled:opacity-60"
+              style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)', color: '#0A0E1A' }}
             >
               {loading ? <><Loader2 size={16} className="animate-spin" /> Connexion…</> : 'Se connecter'}
             </button>
@@ -121,7 +121,7 @@ export default function LoginPage() {
 
           <p className="text-center text-slate-500 text-sm mt-6">
             Pas encore de compte ?{' '}
-            <Link href="/register" style={{ color: '#F5A623' }} className="font-semibold transition-colors hover:opacity-80">
+            <Link href="/register" style={{ color: '#22D3EE' }} className="font-semibold transition-colors hover:opacity-80">
               Créer un compte gratuit
             </Link>
           </p>

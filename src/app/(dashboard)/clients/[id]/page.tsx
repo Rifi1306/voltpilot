@@ -208,7 +208,7 @@ export default function ClientDetailPage({ params }: { params: Promise<{ id: str
                 <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-700"
-                    style={{ width: `${tauxAcceptation}%`, background: 'linear-gradient(90deg, #6366f1, #10b981)' }}
+                    style={{ width: `${tauxAcceptation}%`, background: 'linear-gradient(90deg, #22D3EE, #10b981)' }}
                   />
                 </div>
               </div>

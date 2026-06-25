@@ -78,7 +78,7 @@ export async function POST(request: NextRequest) {
         .single()
 
       if (profile?.email) {
-        const couleur = profile.couleur_primaire ?? '#0ea5e9'
+        const couleur = profile.couleur_primaire ?? '#22D3EE'
         const companyNom = profile.nom ?? 'VoltPilot'
         const eur = (n: number) =>
           new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n)

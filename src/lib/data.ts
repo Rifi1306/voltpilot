@@ -178,7 +178,7 @@ export const defaultSettings: EntrepriseSettings = {
   pays: 'France',
   siret: '00000000000000',
   tva: 'FR00000000000',
-  couleurPrimaire: '#6366f1',
+  couleurPrimaire: '#22D3EE',
   mentionsLegales: 'Devis valable 30 jours. TVA non applicable selon article 293B du CGI.',
   conditionsPaiementDefaut: '30 jours net',
   validiteDevisDefaut: 30,

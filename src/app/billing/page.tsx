@@ -55,7 +55,7 @@ function BillingContent() {
 
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2 mb-10">
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>
+        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}>
           <Sun size={18} className="text-white" />
         </div>
         <span className="font-black text-white text-xl" style={{ letterSpacing: '-0.03em' }}>VoltPilot</span>
@@ -70,11 +70,11 @@ function BillingContent() {
         }}
       >
         {isPastDue
-          ? <AlertTriangle size={20} style={{ color: '#0ea5e9', flexShrink: 0 }} />
+          ? <AlertTriangle size={20} style={{ color: '#22D3EE', flexShrink: 0 }} />
           : <XCircle size={20} style={{ color: '#ef4444', flexShrink: 0 }} />
         }
         <div>
-          <p className="font-bold text-sm" style={{ color: isPastDue ? '#0ea5e9' : '#f87171' }}>
+          <p className="font-bold text-sm" style={{ color: isPastDue ? '#22D3EE' : '#f87171' }}>
             {isPastDue ? 'Paiement en échec' : 'Abonnement inactif'}
           </p>
           <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '12px' }}>
@@ -101,9 +101,9 @@ function BillingContent() {
         <button
           onClick={() => setAnnual(true)}
           className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all"
-          style={{ background: annual ? 'rgba(14,165,233,0.15)' : 'transparent', color: annual ? '#0ea5e9' : 'rgba(255,255,255,0.4)' }}
+          style={{ background: annual ? 'rgba(34,211,238,0.15)' : 'transparent', color: annual ? '#22D3EE' : 'rgba(255,255,255,0.4)' }}
         >
-          Annuel <span className="text-xs font-bold px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(14,165,233,0.2)', color: '#0ea5e9' }}>−17%</span>
+          Annuel <span className="text-xs font-bold px-1.5 py-0.5 rounded-full" style={{ background: 'rgba(34,211,238,0.2)', color: '#22D3EE' }}>−17%</span>
         </button>
       </div>
 
@@ -120,11 +120,11 @@ function BillingContent() {
               className="p-6 rounded-2xl relative"
               style={{
                 background: plan.popular ? 'linear-gradient(135deg, rgba(245,158,11,0.08), rgba(249,115,22,0.05))' : 'rgba(255,255,255,0.03)',
-                border: plan.popular ? '1px solid rgba(14,165,233,0.35)' : '1px solid rgba(255,255,255,0.07)',
+                border: plan.popular ? '1px solid rgba(34,211,238,0.35)' : '1px solid rgba(255,255,255,0.07)',
               }}
             >
               {plan.popular && (
-                <div className="absolute -top-3 left-5 px-3 py-1 rounded-full text-xs font-bold text-white" style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>
+                <div className="absolute -top-3 left-5 px-3 py-1 rounded-full text-xs font-bold" style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)', color: '#0A0E1A' }}>
                   Recommandé
                 </div>
               )}
@@ -136,7 +136,7 @@ function BillingContent() {
               <ul className="space-y-2 mb-5">
                 {plan.features.map(f => (
                   <li key={f} className="flex items-center gap-2 text-sm" style={{ color: 'rgba(255,255,255,0.55)' }}>
-                    <CheckCircle size={13} style={{ color: '#0ea5e9', flexShrink: 0 }} /> {f}
+                    <CheckCircle size={13} style={{ color: '#22D3EE', flexShrink: 0 }} /> {f}
                   </li>
                 ))}
               </ul>
@@ -148,7 +148,7 @@ function BillingContent() {
                   padding: '11px',
                   fontSize: '14px',
                   ...(plan.popular
-                    ? { background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)', color: 'white', boxShadow: '0 4px 16px rgba(14,165,233,0.3)' }
+                    ? { background: 'linear-gradient(135deg, #22D3EE, #06B6D4)', color: '#0A0E1A', boxShadow: '0 4px 16px rgba(34,211,238,0.3)' }
                     : { background: 'rgba(255,255,255,0.07)', color: 'rgba(255,255,255,0.7)', border: '1px solid rgba(255,255,255,0.1)' }),
                 }}
               >

@@ -26,7 +26,7 @@ const PANNEAUX = {
     label: 'Monocristallin', icon: '☀️', rendement: '20-22%',
     puissanceW: 420, prixKwc: 1800,
     avantage: 'Meilleur rendement, idéal surface limitée',
-    couleur: '#0ea5e9',
+    couleur: '#22D3EE',
   },
   polycristallin: {
     label: 'Polycristallin', icon: '🔆', rendement: '16-18%',
@@ -38,7 +38,7 @@ const PANNEAUX = {
     label: 'Bifacial', icon: '✨', rendement: '22-24%',
     puissanceW: 500, prixKwc: 2100,
     avantage: 'Haute performance, capte lumière réfléchie',
-    couleur: '#8b5cf6',
+    couleur: '#06B6D4',
   },
 } as const
 
@@ -182,7 +182,7 @@ export default function WidgetPage() {
         <div className="max-w-2xl mx-auto space-y-4">
           {/* Header */}
           <div className="bg-white rounded-3xl shadow-sm overflow-hidden print:shadow-none">
-            <div className="px-6 py-5" style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>
+            <div className="px-6 py-5" style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center">
@@ -258,7 +258,7 @@ export default function WidgetPage() {
               <BarChart3 size={16} className="text-green-500" /> Production &amp; économies estimées
             </h2>
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 rounded-2xl text-center" style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.08), rgba(249,115,22,0.04))', border: '1px solid rgba(14,165,233,0.2)' }}>
+              <div className="p-4 rounded-2xl text-center" style={{ background: 'linear-gradient(135deg, rgba(245,158,11,0.08), rgba(249,115,22,0.04))', border: '1px solid rgba(34,211,238,0.2)' }}>
                 <p className="text-3xl font-black text-sky-600">{quote.productionAnnuelle.toLocaleString('fr-FR')}</p>
                 <p className="text-sm font-medium text-slate-600 mt-1">kWh/an produits</p>
                 <p className="text-xs text-slate-400 mt-1">Ensoleillement {quote.ensoleillement}h · Pertes 15%</p>
@@ -311,9 +311,9 @@ export default function WidgetPage() {
                 <span>− CEE (Certificats d&apos;Économies d&apos;Énergie)</span>
                 <span className="font-semibold">− {formatEur(quote.aideCEE)}</span>
               </div>
-              <div className="flex justify-between items-center pt-4 mt-2" style={{ borderTop: '2px solid #0ea5e9' }}>
+              <div className="flex justify-between items-center pt-4 mt-2" style={{ borderTop: '2px solid #22D3EE' }}>
                 <span className="font-black text-slate-900 text-lg">Votre coût final estimé</span>
-                <span className="font-black text-2xl" style={{ color: '#0ea5e9' }}>{formatEur(quote.coutFinal)}</span>
+                <span className="font-black text-2xl" style={{ color: '#22D3EE' }}>{formatEur(quote.coutFinal)}</span>
               </div>
             </div>
           </div>
@@ -325,10 +325,10 @@ export default function WidgetPage() {
             </h2>
             <div className="grid grid-cols-2 gap-3">
               {[
-                { label: 'Retour sur investissement', value: `${quote.amortissement} ans`, color: '#0ea5e9' },
+                { label: 'Retour sur investissement', value: `${quote.amortissement} ans`, color: '#22D3EE' },
                 { label: 'Économies sur 25 ans', value: formatEur(quote.economies25ans), color: '#10b981' },
                 { label: 'CO₂ évité par an', value: `${quote.co2Evite} kg`, color: '#22c55e' },
-                { label: 'Coût au kWc installé', value: formatEur(quote.coutParKwc), color: '#6366f1' },
+                { label: 'Coût au kWc installé', value: formatEur(quote.coutParKwc), color: '#22D3EE' },
               ].map(item => (
                 <div key={item.label} className="p-4 rounded-2xl" style={{ background: item.color + '10', border: `1px solid ${item.color}30` }}>
                   <p className="text-xs text-slate-500 font-medium">{item.label}</p>
@@ -352,7 +352,7 @@ export default function WidgetPage() {
             <a
               href={`tel:+33`}
               className="flex items-center gap-3 w-full py-3.5 px-5 rounded-2xl font-bold text-white text-sm transition-all hover:opacity-90"
-              style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}
+              style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}
             >
               <Phone size={18} /> Parler à un conseiller (gratuit)
             </a>
@@ -390,7 +390,7 @@ export default function WidgetPage() {
     <div className="min-h-screen p-4 sm:p-6 flex items-start justify-center pt-6" style={{ background: 'linear-gradient(135deg, #fffbeb 0%, #fff7ed 100%)' }}>
       <div className="bg-white rounded-3xl shadow-lg w-full max-w-lg overflow-hidden">
         {/* Header */}
-        <div className="px-8 py-5" style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>
+        <div className="px-8 py-5" style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}>
           <div className="flex items-center gap-3 mb-4">
             <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center">
               <Sun size={20} className="text-white" />
@@ -615,7 +615,7 @@ export default function WidgetPage() {
             onClick={handleNext}
             disabled={!canNext() || sending}
             className="flex items-center gap-2 py-3 px-6 rounded-xl font-bold text-white text-sm transition-all hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed flex-1 sm:flex-none justify-center"
-            style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}
+            style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}
           >
             {sending ? <><span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Calcul...</>
               : step === 3 ? <><Sun size={16} /> Voir mon devis instantané</>

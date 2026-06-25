@@ -9,7 +9,7 @@ export default function SuccessPage() {
     >
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2 mb-12">
-        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>
+        <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #22D3EE, #06B6D4)' }}>
           <Sun size={18} className="text-white" />
         </div>
         <span className="font-black text-white text-xl" style={{ letterSpacing: '-0.03em' }}>VoltPilot</span>
@@ -48,7 +48,7 @@ export default function SuccessPage() {
             <div
               key={s.label}
               className="p-3 rounded-xl"
-              style={{ background: 'rgba(245,158,11,0.07)', border: '1px solid rgba(245,158,11,0.15)' }}
+              style={{ background: 'rgba(250,204,21,0.07)', border: '1px solid rgba(250,204,21,0.15)' }}
             >
               <p className="font-black text-white" style={{ fontSize: '20px' }}>{s.value}</p>
               <p style={{ color: 'rgba(255,255,255,0.35)', fontSize: '11px' }}>{s.label}</p>
@@ -62,8 +62,8 @@ export default function SuccessPage() {
           style={{
             padding: '14px',
             fontSize: '15px',
-            background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)',
-            boxShadow: '0 4px 20px rgba(14,165,233,0.35)',
+            background: 'linear-gradient(135deg, #22D3EE, #06B6D4)',
+            boxShadow: '0 4px 20px rgba(34,211,238,0.35)',
           }}
         >
           Accéder au tableau de bord <ArrowRight size={16} />
