@@ -122,7 +122,7 @@ export default function DevisPage() {
             <FolderOpen size={14} className="text-slate-400 flex-shrink-0" />
             <button
               onClick={() => setActiveDossier(null)}
-              className={`px-3 py-1 rounded-full text-xs font-semibold border transition-all ${activeDossier === null ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-slate-500 border-slate-200 hover:border-indigo-300'}`}
+              className={`px-3 py-1 rounded-full text-xs font-semibold border transition-all ${activeDossier === null ? 'bg-cyan-500 text-white border-cyan-500' : 'bg-white text-slate-500 border-slate-200 hover:border-cyan-300'}`}
             >
               Tous les dossiers
             </button>
@@ -130,7 +130,7 @@ export default function DevisPage() {
               <button
                 key={d}
                 onClick={() => setActiveDossier(activeDossier === d ? null : d)}
-                className={`px-3 py-1 rounded-full text-xs font-semibold border transition-all ${activeDossier === d ? 'bg-indigo-600 text-white border-indigo-600' : 'bg-white text-slate-500 border-slate-200 hover:border-indigo-300'}`}
+                className={`px-3 py-1 rounded-full text-xs font-semibold border transition-all ${activeDossier === d ? 'bg-cyan-500 text-white border-cyan-500' : 'bg-white text-slate-500 border-slate-200 hover:border-cyan-300'}`}
               >
                 {d}
               </button>
@@ -148,7 +148,7 @@ export default function DevisPage() {
                   onClick={() => setActiveFilter(f.value)}
                   className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
                     activeFilter === f.value
-                      ? 'bg-white text-indigo-700 shadow-sm font-semibold'
+                      ? 'bg-white text-cyan-600 shadow-sm font-semibold'
                       : 'text-slate-500 hover:text-slate-700'
                   }`}
                 >
@@ -164,7 +164,7 @@ export default function DevisPage() {
                 placeholder={t.quotes.searchPlaceholder}
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                className="pl-8 pr-4 py-2 text-sm border border-slate-200 rounded-xl bg-slate-50 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 w-48 transition-all"
+                className="pl-8 pr-4 py-2 text-sm border border-slate-200 rounded-xl bg-slate-50 focus:outline-none focus:ring-2 focus:ring-cyan-100 focus:border-cyan-400 w-48 transition-all"
               />
             </div>
           </div>
@@ -187,7 +187,7 @@ export default function DevisPage() {
                 {loading ? (
                   <tr>
                     <td colSpan={7} className="px-5 py-12 text-center">
-                      <div className="w-6 h-6 border-2 border-indigo-400 border-t-transparent rounded-full animate-spin mx-auto" />
+                      <div className="volt-spinner" style={{ width: 22, height: 22, borderWidth: 2 }} />
                     </td>
                   </tr>
                 ) : filtered.length === 0 ? (
@@ -211,7 +211,7 @@ export default function DevisPage() {
                         <td className="px-5 py-4">
                           <span className="font-semibold text-sm text-slate-900">{d.numero}</span>
                           {d.dossier_id && (
-                            <span className="mt-1 flex items-center gap-1 text-xs text-indigo-600 font-medium">
+                            <span className="mt-1 flex items-center gap-1 text-xs text-cyan-600 font-medium">
                               <FolderOpen size={11} />
                               {d.dossier_id}
                             </span>
@@ -241,7 +241,7 @@ export default function DevisPage() {
                           <div className="flex items-center gap-1">
                             <Link
                               href={`/devis/${d.id}`}
-                              className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:bg-indigo-50 hover:text-indigo-600 transition-colors"
+                              className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-400 hover:bg-cyan-50 hover:text-cyan-600 transition-colors"
                             >
                               <Eye size={15} />
                             </Link>

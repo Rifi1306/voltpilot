@@ -207,7 +207,7 @@ export default function LeadsPage() {
         <div className="space-y-3">
           {loading ? (
             <div className="bg-white rounded-2xl border border-slate-100 p-12 flex justify-center">
-              <div className="w-7 h-7 border-[3px] border-sky-400 border-t-transparent rounded-full animate-spin" />
+              <div className="volt-spinner" />
             </div>
           ) : leads.length === 0 ? (
             <div className="bg-white rounded-2xl border border-slate-100 p-12 text-center">

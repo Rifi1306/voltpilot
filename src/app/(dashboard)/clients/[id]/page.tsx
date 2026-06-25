@@ -67,7 +67,7 @@ export default function ClientDetailPage({ params }: { params: Promise<{ id: str
     <div className="flex-1 overflow-auto">
       <Header title="Chargement…" subtitle="" />
       <div className="flex justify-center py-24">
-        <div className="w-7 h-7 border-[3px] border-indigo-400 border-t-transparent rounded-full animate-spin" />
+        <div className="volt-spinner" />
       </div>
     </div>
   )
@@ -126,7 +126,7 @@ export default function ClientDetailPage({ params }: { params: Promise<{ id: str
                     <Mail size={15} className="text-slate-400 mt-0.5 flex-shrink-0" />
                     <div>
                       <p className="text-xs text-slate-400 font-medium">Email</p>
-                      <a href={`mailto:${client.email}`} className="text-sm text-indigo-600 hover:underline">{client.email}</a>
+                      <a href={`mailto:${client.email}`} className="text-sm text-cyan-600 hover:underline">{client.email}</a>
                     </div>
                   </div>
                 )}
@@ -177,7 +177,7 @@ export default function ClientDetailPage({ params }: { params: Promise<{ id: str
             {/* Stats cards */}
             <div className="grid grid-cols-4 gap-3">
               {[
-                { label: 'CA réalisé', value: totalCA > 0 ? formatCurrency(totalCA) : '—', icon: Euro, color: 'text-indigo-600', bg: 'bg-indigo-50' },
+                { label: 'CA réalisé', value: totalCA > 0 ? formatCurrency(totalCA) : '—', icon: Euro, color: 'text-cyan-600', bg: 'bg-cyan-50' },
                 { label: 'Devis total', value: String(clientDevis.length), icon: FileText, color: 'text-blue-600', bg: 'bg-blue-50' },
                 { label: 'Acceptés', value: String(devisAcceptes.length), icon: CheckCircle2, color: 'text-emerald-600', bg: 'bg-emerald-50' },
                 { label: 'En attente', value: String(devisEnAttente), icon: Clock, color: 'text-sky-600', bg: 'bg-sky-50' },
@@ -240,7 +240,7 @@ export default function ClientDetailPage({ params }: { params: Promise<{ id: str
                     {clientDevis.map(devis => (
                       <tr key={devis.id} className="hover:bg-slate-50/50 transition-colors">
                         <td className="px-5 py-3">
-                          <Link href={`/devis/${devis.id}`} className="font-semibold text-sm text-indigo-600 hover:text-indigo-700">
+                          <Link href={`/devis/${devis.id}`} className="font-semibold text-sm text-cyan-600 hover:text-cyan-600">
                             {devis.numero}
                           </Link>
                         </td>

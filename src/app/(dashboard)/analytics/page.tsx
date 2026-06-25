@@ -73,7 +73,7 @@ export default function AnalyticsPage() {
     <div className="flex-1 overflow-auto">
       <Header title="Analytiques" subtitle="Performance commerciale de votre activité solaire" />
       <div className="flex justify-center py-24">
-        <div className="w-7 h-7 border-[3px] border-indigo-400 border-t-transparent rounded-full animate-spin" />
+        <div className="volt-spinner" />
       </div>
     </div>
   )

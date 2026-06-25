@@ -90,6 +90,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
   const [sendStatus, setSendStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
   const [sendError, setSendError] = useState('')
   const [sendEmailTo, setSendEmailTo] = useState('')
+  const [justAccepted, setJustAccepted] = useState(false)
   const { formatCurrency } = useLanguage()
 
   useEffect(() => {
@@ -107,6 +108,10 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
     startTransition(async () => {
       await updateDevisStatut(id, statut)
       setDevis(prev => prev ? { ...prev, statut } : prev)
+      if (statut === 'accepte') {
+        setJustAccepted(true)
+        setTimeout(() => setJustAccepted(false), 1000)
+      }
     })
   }
 
@@ -134,7 +139,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
     <div className="flex-1 overflow-auto">
       <Header title="Chargement…" subtitle="" />
       <div className="flex justify-center py-24">
-        <div className="w-7 h-7 border-[3px] border-indigo-400 border-t-transparent rounded-full animate-spin" />
+        <div className="volt-spinner" />
       </div>
     </div>
   )
@@ -232,7 +237,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
         </div>
 
         {/* Status banner */}
-        <div className={`rounded-2xl p-4 flex items-center gap-3 ${
+        <div className={`rounded-2xl p-4 flex items-center gap-3 transition-all ${justAccepted ? 'celebrate' : ''} ${
           statut === 'accepte' ? 'bg-emerald-50 border border-emerald-200' :
           statut === 'envoye' ? 'bg-blue-50 border border-blue-200' :
           statut === 'refuse' ? 'bg-red-50 border border-red-200' :
@@ -245,7 +250,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
           </p>
           {statut === 'accepte' && (
             <span className="ml-auto text-emerald-700 font-semibold text-sm flex items-center gap-1">
-              <CheckCircle2 size={15} /> Devis signé et validé
+              <CheckCircle2 size={15} /> {justAccepted ? '🎉 Félicitations !' : 'Devis signé et validé'}
             </span>
           )}
         </div>

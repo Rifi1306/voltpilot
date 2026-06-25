@@ -20,7 +20,7 @@ export default function AdminPage() {
   if (loading) {
     return (
       <div className="flex-1 flex items-center justify-center">
-        <div className="w-8 h-8 border-[3px] border-indigo-400 border-t-transparent rounded-full animate-spin" />
+        <div className="volt-spinner" />
       </div>
     )
   }

@@ -77,7 +77,7 @@ export default function ClientsPage() {
               placeholder={t.clients.searchPlaceholder}
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="pl-9 pr-4 py-2.5 text-sm border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 w-full transition-all"
+              className="pl-9 pr-4 py-2.5 text-sm border border-slate-200 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-cyan-100 focus:border-cyan-400 w-full transition-all"
             />
           </div>
           {!loading && <span className="text-sm text-slate-400">{filtered.length} {t.clients.results}</span>}
@@ -86,7 +86,7 @@ export default function ClientsPage() {
         {/* Loading */}
         {loading && (
           <div className="flex justify-center py-12">
-            <div className="w-7 h-7 border-[3px] border-indigo-400 border-t-transparent rounded-full animate-spin" />
+            <div className="volt-spinner" />
           </div>
         )}
 
@@ -116,14 +116,14 @@ export default function ClientsPage() {
                 <Link
                   key={client.id}
                   href={`/clients/${client.id}`}
-                  className="stat-card group cursor-pointer border hover:border-indigo-200 hover:shadow-lg transition-all duration-200 block"
+                  className="stat-card group cursor-pointer border hover:border-cyan-300 hover:shadow-lg transition-all duration-200 block"
                 >
                   <div className="flex items-start gap-3 mb-4">
                     <div className="w-11 h-11 rounded-xl bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
                       {client.nom.charAt(0).toUpperCase()}
                     </div>
                     <div className="min-w-0">
-                      <h3 className="font-bold text-slate-900 group-hover:text-indigo-600 transition-colors truncate">{client.nom}</h3>
+                      <h3 className="font-bold text-slate-900 group-hover:text-cyan-600 transition-colors truncate">{client.nom}</h3>
                       {client.ville && (
                         <p className="text-xs text-slate-400 mt-0.5 flex items-center gap-1">
                           <MapPin size={11} /> {client.ville}{client.code_postal ? ` (${client.code_postal})` : ''}
@@ -168,7 +168,7 @@ export default function ClientsPage() {
             {/* Add card */}
             <Link
               href="/clients/nouveau"
-              className="rounded-2xl border-2 border-dashed border-slate-200 p-6 flex flex-col items-center justify-center gap-3 hover:border-indigo-300 hover:bg-indigo-50/30 transition-all duration-200 cursor-pointer min-h-[160px]"
+              className="rounded-2xl border-2 border-dashed border-slate-200 p-6 flex flex-col items-center justify-center gap-3 hover:border-cyan-300 hover:bg-cyan-50/30 transition-all duration-200 cursor-pointer min-h-[160px]"
             >
               <div className="w-12 h-12 rounded-xl bg-slate-100 flex items-center justify-center">
                 <Plus size={22} className="text-slate-400" />
