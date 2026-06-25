@@ -1,7 +1,8 @@
 import { getDossier, deleteDossier } from '@/lib/actions/dossiers'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, Folder, FileText, Users, Pencil, Trash2, Plus } from 'lucide-react'
+import { ArrowLeft, Folder, FileText, Users, Pencil, Plus } from 'lucide-react'
+import { DeleteDossierButton } from './DeleteDossierButton'
 
 export const dynamic = 'force-dynamic'
 
@@ -69,19 +70,7 @@ export default async function DossierPage({ params }: { params: Promise<{ id: st
               <Pencil size={13} />
               Modifier
             </Link>
-            <form action={deleteWithId}>
-              <button
-                type="submit"
-                className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm transition-all hover:bg-red-500/20"
-                style={{ background: 'rgba(255,255,255,0.05)', color: '#ef4444' }}
-                onClick={e => {
-                  if (!confirm('Supprimer ce dossier ? Les devis ne seront pas supprimés.')) e.preventDefault()
-                }}
-              >
-                <Trash2 size={13} />
-                Supprimer
-              </button>
-            </form>
+            <DeleteDossierButton action={deleteWithId} />
           </div>
         </div>
 
