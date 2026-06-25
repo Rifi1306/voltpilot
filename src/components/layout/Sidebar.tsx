@@ -61,7 +61,7 @@ export function Sidebar() {
                 <Icon size={16} />
                 <span>{label}</span>
                 {active && (
-                  <span className="ml-auto w-1.5 h-1.5 rounded-full" style={{ background: '#0ea5e9' }} />
+                  <span className="ml-auto w-1.5 h-1.5 rounded-full" style={{ background: '#F5A623' }} />
                 )}
               </Link>
             )
@@ -88,7 +88,7 @@ export function Sidebar() {
                   key={l.code}
                   onClick={() => { setLang(l.code as LangCode); setLangOpen(false) }}
                   className="w-full flex items-center gap-2 px-3 py-2 text-left transition-all hover:bg-white/5"
-                  style={{ color: l.code === lang ? '#0ea5e9' : 'rgba(255,255,255,0.6)', fontSize: '12px' }}
+                  style={{ color: l.code === lang ? '#F5A623' : 'rgba(255,255,255,0.6)', fontSize: '12px' }}
                 >
                   <span>{l.flag}</span>
                   <span>{l.label}</span>
@@ -103,7 +103,7 @@ export function Sidebar() {
           <div className="flex items-center gap-2.5 px-2 py-2.5 rounded-xl" style={{ background: 'rgba(255,255,255,0.04)' }}>
             <div
               className="w-7 h-7 rounded-lg flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
-              style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}
+              style={{ background: 'linear-gradient(135deg, #F5A623, #f97316)' }}
             >
               VP
             </div>
@@ -145,11 +145,11 @@ export function Sidebar() {
             >
               <Icon
                 size={20}
-                style={{ color: active ? '#0ea5e9' : 'rgba(255,255,255,0.35)' }}
+                style={{ color: active ? '#F5A623' : 'rgba(255,255,255,0.35)' }}
               />
               <span
                 className="text-[9px] font-medium leading-tight"
-                style={{ color: active ? '#0ea5e9' : 'rgba(255,255,255,0.35)' }}
+                style={{ color: active ? '#F5A623' : 'rgba(255,255,255,0.35)' }}
               >
                 {label}
               </span>

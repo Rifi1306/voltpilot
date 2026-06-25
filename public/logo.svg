@@ -1,36 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
   <defs>
-    <linearGradient id="hexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f59e0b"/>
-      <stop offset="100%" stop-color="#f97316"/>
-    </linearGradient>
-    <linearGradient id="boltGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
-      <stop offset="100%" stop-color="#fde68a" stop-opacity="0.9"/>
-    </linearGradient>
-    <filter id="shadow">
-      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-color="#f59e0b" flood-opacity="0.4"/>
+    <filter id="glow">
+      <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#F5A623" flood-opacity="0.45"/>
+    </filter>
+    <filter id="cyanglow">
+      <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#06B6D4" flood-opacity="0.8"/>
     </filter>
   </defs>
 
-  <!-- Hexagon -->
-  <path
-    d="M100 8 L174 50 L174 150 L100 192 L26 150 L26 50 Z"
-    fill="url(#hexGrad)"
-    filter="url(#shadow)"
-  />
+  <!-- Hexagone fond sombre -->
+  <path d="M100 6L180 51V149L100 194L20 149V51Z" fill="#0F2040"/>
+  <!-- Bordure subtile -->
+  <path d="M100 6L180 51V149L100 194L20 149V51Z" fill="none" stroke="#1A3560" stroke-width="2"/>
+  <!-- Bordure intérieure -->
+  <path d="M100 20L168 59V141L100 180L32 141V59Z" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
 
-  <!-- Inner hexagon outline -->
-  <path
-    d="M100 22 L162 57 L162 143 L100 178 L38 143 L38 57 Z"
-    fill="none"
-    stroke="rgba(255,255,255,0.15)"
-    stroke-width="1.5"
-  />
+  <!-- Éclair Solar Gold -->
+  <path d="M116 30L72 106H94L80 170L132 94H110L116 30Z" fill="#F5A623" filter="url(#glow)"/>
 
-  <!-- Lightning bolt V -->
-  <path
-    d="M78 62 L95 105 L84 105 L112 148 L104 110 L116 110 Z"
-    fill="url(#boltGrad)"
-  />
+  <!-- Points lumineux cyan -->
+  <circle cx="58" cy="58" r="5" fill="#F5A623" opacity="0.25"/>
+  <circle cx="142" cy="46" r="3" fill="#06B6D4" opacity="0.7" filter="url(#cyanglow)"/>
+  <circle cx="48" cy="128" r="2.5" fill="#06B6D4" opacity="0.45"/>
+  <circle cx="152" cy="138" r="2" fill="#F5A623" opacity="0.3"/>
 </svg>

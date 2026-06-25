@@ -2,7 +2,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { Sun, CheckCircle, Loader2, AlertCircle } from 'lucide-react'
+import { CheckCircle, Loader2, AlertCircle } from 'lucide-react'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -36,21 +36,21 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex" style={{ background: '#0a0614' }}>
+    <div className="min-h-screen flex" style={{ background: '#0A1628' }}>
       {/* Left panel */}
-      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between p-12" style={{ background: 'linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)' }}>
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #0ea5e9, #8b5cf6)' }}>
-            <Sun size={18} className="text-white" />
-          </div>
-          <span className="text-white font-bold text-xl">VoltPilot</span>
+      <div className="hidden lg:flex lg:w-1/2 flex-col justify-between p-12" style={{ background: 'linear-gradient(150deg, #0F2040 0%, #0A1628 100%)', borderRight: '1px solid #1A3560' }}>
+        <div className="flex items-center gap-3">
+          <img src="/logo.svg" alt="VoltPilot" width={40} height={40} />
+          <span className="font-black text-xl tracking-tight">
+            <span style={{ color: '#F5A623' }}>Volt</span><span className="text-white">Pilot</span>
+          </span>
         </div>
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-xs font-semibold" style={{ background: 'rgba(99,102,241,0.2)', color: '#a5b4fc', border: '1px solid rgba(99,102,241,0.3)' }}>
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6 text-xs font-semibold" style={{ background: 'rgba(245,166,35,0.12)', color: '#F5A623', border: '1px solid rgba(245,166,35,0.25)' }}>
             ✨ 14 jours gratuits — sans CB
           </div>
           <h2 className="text-4xl font-black text-white mb-4">Rejoignez VoltPilot</h2>
-          <p className="text-indigo-300 text-lg leading-relaxed mb-8">
+          <p className="text-lg leading-relaxed mb-8" style={{ color: '#4A6080' }}>
             Des centaines d&apos;installateurs solaires font confiance à VoltPilot pour gérer leur activité.
           </p>
           <div className="space-y-3">
@@ -62,15 +62,15 @@ export default function RegisterPage() {
               'Export PDF avec votre logo',
               'Support client dédié',
             ].map(f => (
-              <div key={f} className="flex items-center gap-2.5 text-sm text-indigo-200">
-                <CheckCircle size={14} className="text-emerald-400 flex-shrink-0" /> {f}
+              <div key={f} className="flex items-center gap-2.5 text-sm" style={{ color: '#7A90A8' }}>
+                <CheckCircle size={14} style={{ color: '#F5A623' }} className="flex-shrink-0" /> {f}
               </div>
             ))}
           </div>
         </div>
-        <div className="p-4 rounded-2xl" style={{ background: 'rgba(255,255,255,0.07)' }}>
-          <p className="text-indigo-200 text-sm italic">&quot;VoltPilot m&apos;a fait gagner 5h par semaine sur mes devis. Je peux me concentrer sur mes chantiers.&quot;</p>
-          <p className="text-indigo-400 text-xs mt-2">— Marc D., installateur solaire à Lyon</p>
+        <div className="p-4 rounded-2xl" style={{ background: 'rgba(245,166,35,0.06)', border: '1px solid rgba(245,166,35,0.12)' }}>
+          <p className="text-sm italic" style={{ color: '#7A90A8' }}>&quot;VoltPilot m&apos;a fait gagner 5h par semaine sur mes devis. Je peux me concentrer sur mes chantiers.&quot;</p>
+          <p className="text-xs mt-2" style={{ color: '#4A6080' }}>— Marc D., installateur solaire à Lyon</p>
         </div>
       </div>
 
@@ -128,7 +128,7 @@ export default function RegisterPage() {
               type="submit"
               disabled={loading}
               className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-bold text-white transition-all disabled:opacity-60"
-              style={{ background: 'linear-gradient(135deg, #6366f1, #8b5cf6)' }}
+              style={{ background: 'linear-gradient(135deg, #F5A623, #f97316)' }}
             >
               {loading
                 ? <><Loader2 size={16} className="animate-spin" /> Création du compte…</>
@@ -138,7 +138,7 @@ export default function RegisterPage() {
 
           <p className="text-center text-slate-500 text-sm mt-6">
             Déjà un compte ?{' '}
-            <Link href="/login" className="text-indigo-400 hover:text-indigo-300 font-semibold">Se connecter</Link>
+            <Link href="/login" style={{ color: '#F5A623' }} className="font-semibold hover:opacity-80">Se connecter</Link>
           </p>
         </div>
       </div>
