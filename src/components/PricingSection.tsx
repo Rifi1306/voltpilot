@@ -119,7 +119,7 @@ export function PricingSection() {
               className="p-7 rounded-2xl relative"
               style={{
                 background: plan.popular
-                  ? 'linear-gradient(135deg, rgba(245,158,11,0.08), rgba(249,115,22,0.05))'
+                  ? 'linear-gradient(135deg, rgba(34,211,238,0.07), rgba(45,212,191,0.03))'
                   : 'rgba(255,255,255,0.03)',
                 border: plan.popular
                   ? '1px solid rgba(34,211,238,0.35)'
