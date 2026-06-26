@@ -4,10 +4,9 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import { computeEstimationWithPVGIS } from '@/lib/estimation'
 import { Resend } from 'resend'
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 // POST — public: visitor submits from the embedded widget
 export async function POST(request: NextRequest) {
+  const resend = new Resend(process.env.RESEND_API_KEY)
   try {
     const body = await request.json()
     const {

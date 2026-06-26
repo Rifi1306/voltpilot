@@ -67,11 +67,11 @@ export function getStatusLabel(status: DevisStatus): string {
 
 export function getStatusColor(status: DevisStatus): string {
   const colors: Record<DevisStatus, string> = {
-    brouillon: 'bg-slate-100 text-slate-700',
-    envoye: 'bg-blue-100 text-blue-700',
-    accepte: 'bg-emerald-100 text-emerald-700',
-    refuse: 'bg-red-100 text-red-700',
-    expire: 'bg-sky-100 text-sky-700',
+    brouillon: 'bg-white/5 text-white/40 border border-white/10',
+    envoye:    'bg-blue-500/10 text-blue-400 border border-blue-500/20',
+    accepte:   'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20',
+    refuse:    'bg-red-500/10 text-red-400 border border-red-500/20',
+    expire:    'bg-amber-500/10 text-amber-400 border border-amber-500/20',
   }
   return colors[status]
 }
