@@ -418,47 +418,5 @@ export function SolarScene() {
     }
   }, [])
 
-  return (
-    <div className="relative w-full h-full">
-      {/* Three.js canvas */}
-      <div ref={containerRef} className="w-full h-full" aria-hidden="true" />
-
-      {/* Layer labels overlay — right side */}
-      <div
-        className="absolute right-0 top-1/2 -translate-y-1/2 flex flex-col gap-2 pr-3 pointer-events-none hidden md:flex"
-      >
-        {LAYERS.map((layer, i) => (
-          <div
-            key={i}
-            className="flex items-center gap-2 transition-all duration-700"
-            style={{
-              opacity: exploding ? 1 : 0.25,
-              transform: exploding ? 'translateX(0)' : 'translateX(8px)',
-              transitionDelay: `${i * 60}ms`,
-            }}
-          >
-            <div
-              className="h-px flex-1"
-              style={{
-                width: '20px',
-                background: layer.color,
-                opacity: 0.5,
-                boxShadow: `0 0 4px ${layer.color}`,
-              }}
-            />
-            <span
-              className="text-[10px] font-medium whitespace-nowrap"
-              style={{
-                color: layer.color,
-                fontFamily: "'Sora', sans-serif",
-                textShadow: `0 0 8px ${layer.color}60`,
-              }}
-            >
-              {layer.label}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  )
+  return <div ref={containerRef} className="w-full h-full" aria-hidden="true" />
 }
