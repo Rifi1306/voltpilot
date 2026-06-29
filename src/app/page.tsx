@@ -18,7 +18,7 @@ export default function LandingPage() {
         <div className="hidden md:flex items-center gap-7">
           <a href="#fonctionnalites" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '14px' }} className="hover:text-white transition-colors">Fonctionnalités</a>
           <a href="#tarifs" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '14px' }} className="hover:text-white transition-colors">Tarifs</a>
-          <a href="#contact" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '14px' }} className="hover:text-white transition-colors">Contact</a>
+          <Link href="/contact" style={{ color: 'rgba(255,255,255,0.45)', fontSize: '14px' }} className="hover:text-white transition-colors">Contact</Link>
         </div>
 
         <div className="flex items-center gap-3">

@@ -13,7 +13,7 @@ import {
 import { FileText, Users, CheckCircle2, Euro, ArrowUpRight, Plus, Rocket } from 'lucide-react'
 import Link from 'next/link'
 
-type Stats = { totalDevis: number; devisAcceptes: number; tauxConversion: number; caTotal: number; totalClients: number }
+type Stats = { totalDevis: number; devisAcceptes: number; tauxConversion: number; caTotal: number; totalClients: number; devisBrouillon: number; devisEnvoyes: number; devisRefuses: number; devisExpires: number }
 type SDevis = { id: string; numero: string; statut: string; lignes: unknown; remise: number | null; created_at: string; date_validite: string; clients: { nom: string; email: string; ville: string } | null }
 type SClient = { id: string; nom: string; ville: string | null; email: string | null }
 
@@ -273,6 +273,39 @@ export default function DashboardPage() {
             )
           })}
         </div>
+
+        {/* Pipeline devis */}
+        {stats && (stats.devisBrouillon > 0 || stats.devisEnvoyes > 0 || stats.devisAcceptes > 0 || stats.devisRefuses > 0 || stats.devisExpires > 0) && (
+          <div className="volt-card p-5 animate-fade-up animate-fade-up-2">
+            <h2 className="font-semibold text-sm mb-4" style={{ color: 'var(--nova)', fontFamily: "'Sora', sans-serif" }}>
+              Pipeline devis
+            </h2>
+            <div className="flex items-center gap-2 overflow-x-auto pb-1">
+              {[
+                { label: 'Brouillon', value: stats.devisBrouillon ?? 0, color: '#94a3b8', bg: 'rgba(148,163,184,0.12)', border: 'rgba(148,163,184,0.3)' },
+                { label: 'Envoyé', value: stats.devisEnvoyes ?? 0, color: '#38bdf8', bg: 'rgba(56,189,248,0.1)', border: 'rgba(56,189,248,0.3)' },
+                { label: 'Accepté', value: stats.devisAcceptes ?? 0, color: '#10b981', bg: 'rgba(16,185,129,0.1)', border: 'rgba(16,185,129,0.3)' },
+                { label: 'Refusé', value: stats.devisRefuses ?? 0, color: '#ef4444', bg: 'rgba(239,68,68,0.1)', border: 'rgba(239,68,68,0.3)' },
+                { label: 'Expiré', value: stats.devisExpires ?? 0, color: '#f97316', bg: 'rgba(249,115,22,0.1)', border: 'rgba(249,115,22,0.3)' },
+              ].map((step, i, arr) => (
+                <div key={step.label} className="flex items-center gap-2 flex-shrink-0">
+                  <div
+                    className="flex flex-col items-center px-4 py-3 rounded-xl min-w-[90px]"
+                    style={{ background: step.bg, border: `1px solid ${step.border}` }}
+                  >
+                    <span className="text-xl font-black" style={{ color: step.color, fontFamily: "'Sora', sans-serif", letterSpacing: '-0.03em' }}>
+                      {step.value}
+                    </span>
+                    <span className="text-xs font-medium mt-0.5" style={{ color: 'var(--star)' }}>{step.label}</span>
+                  </div>
+                  {i < arr.length - 1 && (
+                    <span className="text-base font-bold flex-shrink-0" style={{ color: 'var(--dust)' }}>→</span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Charts */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

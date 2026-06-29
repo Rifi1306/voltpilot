@@ -5,6 +5,7 @@ import { usePathname } from 'next/navigation'
 import { useState, useEffect } from 'react'
 import {
   LayoutDashboard, FileText, Users, Settings, LogOut, BarChart3, Zap, Globe, Folder,
+  Package, Receipt,
 } from 'lucide-react'
 import { signOutAction, getProfile } from '@/lib/actions/profile'
 import { useLanguage } from '@/i18n/LanguageContext'
@@ -23,6 +24,8 @@ export function Sidebar() {
   const navItems = [
     { href: '/dashboard', icon: LayoutDashboard, label: t.nav.dashboard },
     { href: '/devis',     icon: FileText,        label: t.nav.quotes },
+    { href: '/factures',  icon: Receipt,         label: 'Factures' },
+    { href: '/catalogue', icon: Package,         label: 'Catalogue' },
     { href: '/clients',   icon: Users,           label: t.nav.clients },
     { href: '/dossiers',  icon: Folder,          label: t.nav.folders },
     { href: '/leads',     icon: Zap,             label: t.nav.leads },

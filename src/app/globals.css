@@ -16,21 +16,22 @@
   --surface-solid:  #0d1530;
   --glass:          rgba(16, 24, 64, 0.5);
 
-  /* ── Nebula accents ────────────────────────── */
-  --nebula:         #7c3aed;
-  --nebula-bright:  #9b5cf6;
-  --nebula-glow:    rgba(124, 58, 237, 0.25);
-  --indigo:         #4f46e5;
+  /* ── Solar / orange primary (VoltPilot brand) */
+  --solar:          #f5a623;
+  --solar-bright:   #ffbe4d;
+  --solar-dim:      rgba(245, 166, 35, 0.5);
+  --solar-glow:     rgba(245, 166, 35, 0.2);
+  --solar-border:   rgba(245, 166, 35, 0.28);
+  --solar-dark:     #e8960f;
 
-  /* ── Plasma / energy ───────────────────────── */
-  --plasma:         #22d3ee;
-  --plasma-dim:     rgba(34, 211, 238, 0.5);
-  --plasma-glow:    rgba(34, 211, 238, 0.18);
-
-  /* ── Solar / metrics ───────────────────────── */
-  --solar:          #f59e0b;
-  --solar-bright:   #fbbf24;
-  --solar-glow:     rgba(245, 158, 11, 0.2);
+  /* ── Aliases for compat ─────────────────────── */
+  --nebula:         var(--solar);
+  --nebula-bright:  var(--solar-bright);
+  --nebula-glow:    var(--solar-glow);
+  --indigo:         var(--solar-dark);
+  --plasma:         #fbbf24;
+  --plasma-dim:     rgba(251, 191, 36, 0.5);
+  --plasma-glow:    rgba(251, 191, 36, 0.18);
 
   /* ── Text ──────────────────────────────────── */
   --nova:           rgba(255, 255, 255, 0.93);
@@ -39,8 +40,8 @@
   --void-text:      rgba(255, 255, 255, 0.07);
 
   /* ── Borders ───────────────────────────────── */
-  --border-nebula:  rgba(124, 58, 237, 0.22);
-  --border-plasma:  rgba(34, 211, 238, 0.18);
+  --border-nebula:  rgba(245, 166, 35, 0.22);
+  --border-plasma:  rgba(251, 191, 36, 0.18);
   --border-dim:     rgba(255, 255, 255, 0.06);
   --border-bright:  rgba(255, 255, 255, 0.13);
 
@@ -69,9 +70,9 @@ body {
 .space-ambient {
   background-color: var(--void);
   background-image:
-    radial-gradient(ellipse 80% 50% at 50% -5%,  rgba(124, 58, 237, 0.14) 0%, transparent 65%),
-    radial-gradient(ellipse 45% 35% at 85% 80%,  rgba(34, 211, 238, 0.07) 0%, transparent 60%),
-    radial-gradient(ellipse 55% 40% at 8%  65%,  rgba(79, 70, 229, 0.09)  0%, transparent 60%);
+    radial-gradient(ellipse 80% 50% at 50% -5%,  rgba(245, 166, 35, 0.12) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 35% at 85% 80%,  rgba(251, 191, 36, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 55% 40% at 8%  65%,  rgba(245, 166, 35, 0.07) 0%, transparent 60%);
 }
 
 /* ── Sidebar item ───────────────────────────── */
@@ -93,11 +94,11 @@ body {
   color: var(--nova);
 }
 .sidebar-item.active {
-  background: rgba(124, 58, 237, 0.18);
-  color: var(--nebula-bright);
-  box-shadow: inset 0 0 0 1px rgba(124, 58, 237, 0.3);
+  background: rgba(245, 166, 35, 0.15);
+  color: var(--solar-bright);
+  box-shadow: inset 0 0 0 1px rgba(245, 166, 35, 0.28);
 }
-.sidebar-item.active svg { color: var(--nebula-bright); }
+.sidebar-item.active svg { color: var(--solar-bright); }
 
 /* ── Glass card ─────────────────────────────── */
 .volt-card {
@@ -110,7 +111,7 @@ body {
 }
 .volt-card:hover {
   border-color: var(--border-nebula);
-  box-shadow: 0 0 28px rgba(124, 58, 237, 0.08);
+  box-shadow: 0 0 28px rgba(245, 166, 35, 0.08);
 }
 
 /* ── Stat card ──────────────────────────────── */
@@ -129,12 +130,12 @@ body {
   content: '';
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 60% 50% at 100% 0%, rgba(124,58,237,0.06) 0%, transparent 70%);
+  background: radial-gradient(ellipse 60% 50% at 100% 0%, rgba(245,166,35,0.06) 0%, transparent 70%);
   pointer-events: none;
 }
 .stat-card:hover {
   border-color: var(--border-nebula);
-  box-shadow: 0 4px 32px rgba(124, 58, 237, 0.1);
+  box-shadow: 0 4px 32px rgba(245, 166, 35, 0.1);
   transform: translateY(-2px);
 }
 
@@ -148,16 +149,17 @@ body {
   font-size: 13.5px;
   font-weight: 600;
   color: #fff;
-  background: linear-gradient(135deg, var(--nebula) 0%, var(--indigo) 100%);
+  background: var(--solar);
   border: none;
   cursor: pointer;
   transition: all var(--dur-base) var(--ease-out-expo);
   white-space: nowrap;
   letter-spacing: -0.01em;
-  box-shadow: 0 1px 2px rgba(124, 58, 237, 0.35), inset 0 1px 0 rgba(255,255,255,0.1);
+  box-shadow: 0 1px 2px rgba(245, 166, 35, 0.4), inset 0 1px 0 rgba(255,255,255,0.15);
 }
 .btn-primary:hover {
-  box-shadow: 0 4px 22px rgba(124, 58, 237, 0.5), inset 0 1px 0 rgba(255,255,255,0.15);
+  background: var(--solar-dark);
+  box-shadow: 0 4px 22px rgba(245, 166, 35, 0.5), inset 0 1px 0 rgba(255,255,255,0.15);
   transform: translateY(-1px);
 }
 .btn-primary:active { transform: translateY(0); }
@@ -214,8 +216,8 @@ body {
   font-family: inherit;
 }
 .input-field:focus {
-  border-color: var(--nebula);
-  box-shadow: 0 0 0 3px var(--nebula-glow);
+  border-color: var(--solar);
+  box-shadow: 0 0 0 3px var(--solar-glow);
 }
 .input-field::placeholder { color: var(--dust); }
 
@@ -234,8 +236,8 @@ body {
   font-family: inherit;
 }
 .select-field:focus {
-  border-color: var(--nebula);
-  box-shadow: 0 0 0 3px var(--nebula-glow);
+  border-color: var(--solar);
+  box-shadow: 0 0 0 3px var(--solar-glow);
 }
 .select-field option { background: var(--deep); color: var(--nova); }
 
@@ -253,17 +255,17 @@ body {
 
 /* ── Table ──────────────────────────────────── */
 .table-row-hover { transition: background 0.12s; }
-.table-row-hover:hover { background: rgba(124, 58, 237, 0.05); }
+.table-row-hover:hover { background: rgba(245, 166, 35, 0.05); }
 
 /* ── Gradient text ──────────────────────────── */
 .gradient-text {
-  background: linear-gradient(135deg, var(--plasma), var(--nebula-bright));
+  background: linear-gradient(135deg, var(--solar-bright), var(--solar));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 .gradient-nebula {
-  background: linear-gradient(135deg, var(--nebula) 0%, var(--indigo) 100%);
+  background: linear-gradient(135deg, var(--solar) 0%, var(--solar-dark) 100%);
 }
 
 /* ── Scrollbar ──────────────────────────────── */
@@ -285,7 +287,7 @@ body {
 .progress-fill {
   height: 100%;
   border-radius: 99px;
-  background: linear-gradient(90deg, var(--nebula), var(--plasma));
+  background: linear-gradient(90deg, var(--solar), var(--solar-bright));
   transition: width 0.6s ease;
 }
 
@@ -293,11 +295,11 @@ body {
 .volt-spinner {
   width: 32px;
   height: 32px;
-  border: 2.5px solid rgba(124, 58, 237, 0.18);
-  border-top-color: var(--nebula);
+  border: 2.5px solid rgba(245, 166, 35, 0.18);
+  border-top-color: var(--solar);
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
-  box-shadow: 0 0 14px var(--nebula-glow);
+  box-shadow: 0 0 14px var(--solar-glow);
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -326,10 +328,10 @@ body {
 
 /* ── Celebrate glow ─────────────────────────── */
 @keyframes celebrate-glow {
-  0%   { box-shadow: 0 0 0 0   rgba(124,58,237,0); }
-  30%  { box-shadow: 0 0 0 12px rgba(124,58,237,0.2); }
-  60%  { box-shadow: 0 0 0 24px rgba(34,211,238,0.08); }
-  100% { box-shadow: 0 0 0 0   rgba(34,211,238,0); }
+  0%   { box-shadow: 0 0 0 0   rgba(245,166,35,0); }
+  30%  { box-shadow: 0 0 0 12px rgba(245,166,35,0.2); }
+  60%  { box-shadow: 0 0 0 24px rgba(251,191,36,0.08); }
+  100% { box-shadow: 0 0 0 0   rgba(251,191,36,0); }
 }
 .celebrate { animation: celebrate-glow 900ms var(--ease-out-expo) forwards; }
 

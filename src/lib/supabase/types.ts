@@ -1,6 +1,7 @@
 export type Json = string | number | boolean | null | { [key: string]: Json } | Json[]
 
 export type DevisStatut = 'brouillon' | 'envoye' | 'accepte' | 'refuse' | 'expire'
+export type FactureStatut = 'emise' | 'payee' | 'en_retard' | 'annulee'
 
 export interface Database {
   public: {
@@ -26,6 +27,15 @@ export interface Database {
           subscription_status: string
           subscription_period_end: string | null
           widget_show_price: boolean
+          rge_number: string | null
+          assurance_decennale: string | null
+          iban: string | null
+          garanties_defaut: string | null
+          format_numero_devis: string
+          format_numero_facture: string
+          prime_autoconsommation: number | null
+          tarif_rachat_surplus: number | null
+          hypotheses_note: string | null
           created_at: string
         }
         Insert: {
@@ -46,6 +56,15 @@ export interface Database {
           stripe_customer_id?: string | null
           stripe_subscription_id?: string | null
           widget_show_price?: boolean
+          rge_number?: string | null
+          assurance_decennale?: string | null
+          iban?: string | null
+          garanties_defaut?: string | null
+          format_numero_devis?: string
+          format_numero_facture?: string
+          prime_autoconsommation?: number | null
+          tarif_rachat_surplus?: number | null
+          hypotheses_note?: string | null
         }
         Update: {
           nom?: string
@@ -65,6 +84,15 @@ export interface Database {
           subscription_status?: string
           subscription_period_end?: string | null
           widget_show_price?: boolean
+          rge_number?: string | null
+          assurance_decennale?: string | null
+          iban?: string | null
+          garanties_defaut?: string | null
+          format_numero_devis?: string
+          format_numero_facture?: string
+          prime_autoconsommation?: number | null
+          tarif_rachat_surplus?: number | null
+          hypotheses_note?: string | null
         }
         Relationships: []
       }
@@ -113,12 +141,29 @@ export interface Database {
           numero: string
           statut: DevisStatut
           lignes: Json
+          lots: Json
           remise: number
           acompte: number
           conditions_paiement: string
           notes: string | null
           dossier_id: string | null
           date_validite: string
+          type_client: string
+          adresse_chantier: string | null
+          code_postal_chantier: string | null
+          ville_chantier: string | null
+          type_projet: string
+          type_couverture: string | null
+          type_pose: string
+          orientation: string
+          inclinaison: string
+          reseau: string
+          ombrage: boolean
+          puissance_kwc: number | null
+          nb_panneaux: number | null
+          production_kwh_an: number | null
+          etude_eco: Json
+          marge_interne: number | null
           created_at: string
         }
         Insert: {
@@ -127,23 +172,199 @@ export interface Database {
           numero: string
           statut?: DevisStatut
           lignes?: Json
+          lots?: Json
           remise?: number
           acompte?: number
           conditions_paiement?: string
           notes?: string | null
           dossier_id?: string | null
           date_validite: string
+          type_client?: string
+          adresse_chantier?: string | null
+          code_postal_chantier?: string | null
+          ville_chantier?: string | null
+          type_projet?: string
+          type_couverture?: string | null
+          type_pose?: string
+          orientation?: string
+          inclinaison?: string
+          reseau?: string
+          ombrage?: boolean
+          puissance_kwc?: number | null
+          nb_panneaux?: number | null
+          production_kwh_an?: number | null
+          etude_eco?: Json
+          marge_interne?: number | null
         }
         Update: {
           client_id?: string
           statut?: DevisStatut
           lignes?: Json
+          lots?: Json
           remise?: number
           acompte?: number
           conditions_paiement?: string
           notes?: string | null
           dossier_id?: string | null
           date_validite?: string
+          type_client?: string
+          adresse_chantier?: string | null
+          code_postal_chantier?: string | null
+          ville_chantier?: string | null
+          type_projet?: string
+          type_couverture?: string | null
+          type_pose?: string
+          orientation?: string
+          inclinaison?: string
+          reseau?: string
+          ombrage?: boolean
+          puissance_kwc?: number | null
+          nb_panneaux?: number | null
+          production_kwh_an?: number | null
+          etude_eco?: Json
+          marge_interne?: number | null
+        }
+        Relationships: []
+      }
+      dossiers: {
+        Row: {
+          id: string
+          user_id: string
+          client_id: string | null
+          nom: string
+          description: string | null
+          created_at: string
+        }
+        Insert: {
+          user_id: string
+          nom: string
+          client_id?: string | null
+          description?: string | null
+        }
+        Update: {
+          nom?: string
+          client_id?: string | null
+          description?: string | null
+        }
+        Relationships: []
+      }
+      catalogue_produits: {
+        Row: {
+          id: string
+          user_id: string
+          reference: string | null
+          designation: string
+          famille: string
+          description: string | null
+          marque: string | null
+          modele: string | null
+          unite: string
+          prix_achat: number
+          prix_vente: number
+          tva: number
+          type_projet: string
+          actif: boolean
+          ordre: number
+          created_at: string
+        }
+        Insert: {
+          user_id: string
+          designation: string
+          famille: string
+          reference?: string | null
+          description?: string | null
+          marque?: string | null
+          modele?: string | null
+          unite?: string
+          prix_achat?: number
+          prix_vente?: number
+          tva?: number
+          type_projet?: string
+          actif?: boolean
+          ordre?: number
+        }
+        Update: {
+          reference?: string | null
+          designation?: string
+          famille?: string
+          description?: string | null
+          marque?: string | null
+          modele?: string | null
+          unite?: string
+          prix_achat?: number
+          prix_vente?: number
+          tva?: number
+          type_projet?: string
+          actif?: boolean
+          ordre?: number
+        }
+        Relationships: []
+      }
+      kits_projets: {
+        Row: {
+          id: string
+          user_id: string
+          nom: string
+          description: string | null
+          type_projet: string
+          lignes: Json
+          created_at: string
+        }
+        Insert: {
+          user_id: string
+          nom: string
+          type_projet?: string
+          description?: string | null
+          lignes?: Json
+        }
+        Update: {
+          nom?: string
+          description?: string | null
+          type_projet?: string
+          lignes?: Json
+        }
+        Relationships: []
+      }
+      factures: {
+        Row: {
+          id: string
+          user_id: string
+          devis_id: string | null
+          client_id: string
+          numero: string
+          statut: FactureStatut
+          lignes: Json
+          lots: Json
+          remise: number
+          acompte_verse: number
+          conditions_paiement: string
+          date_echeance: string | null
+          notes: string | null
+          created_at: string
+        }
+        Insert: {
+          user_id: string
+          client_id: string
+          numero: string
+          devis_id?: string | null
+          statut?: FactureStatut
+          lignes?: Json
+          lots?: Json
+          remise?: number
+          acompte_verse?: number
+          conditions_paiement?: string
+          date_echeance?: string | null
+          notes?: string | null
+        }
+        Update: {
+          statut?: FactureStatut
+          lignes?: Json
+          lots?: Json
+          remise?: number
+          acompte_verse?: number
+          conditions_paiement?: string
+          date_echeance?: string | null
+          notes?: string | null
         }
         Relationships: []
       }

@@ -36,7 +36,7 @@ export default function CancelPage() {
         </p>
 
         <Link
-          href="/#pricing"
+          href="/#tarifs"
           className="flex items-center justify-center gap-2 w-full rounded-xl font-bold"
           style={{
             padding: '14px',

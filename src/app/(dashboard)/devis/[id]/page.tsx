@@ -1,19 +1,22 @@
 'use client'
 import { use, useState, useEffect, useTransition } from 'react'
 import { Header } from '@/components/layout/Header'
-import { getDevisById, updateDevisStatut, deleteDevisAction } from '@/lib/actions/devis'
+import { getDevisById, updateDevisStatut, deleteDevisAction, duplicateDevisAction } from '@/lib/actions/devis'
 import { getProfile } from '@/lib/actions/profile'
+import { createFactureFromDevis } from '@/lib/actions/factures'
 import { useLanguage } from '@/i18n/LanguageContext'
 import { StatusBadge } from '@/components/ui/Badge'
 import type { DevisStatus } from '@/lib/types'
 import {
   Download, Send, CheckCircle2, XCircle, ArrowLeft,
-  Printer, MapPin, Phone, Mail, Calendar, CreditCard, Percent, Sun, Trash2
+  Printer, MapPin, Phone, Mail, Calendar, CreditCard, Percent, Sun, Trash2,
+  Copy, Receipt, Zap, TrendingUp
 } from 'lucide-react'
 import Link from 'next/link'
 import { generateDevisPDF } from '@/lib/generatePDF'
 import type { DevisForPDF, ProfileForPDF } from '@/lib/generatePDF'
 import { sendDevisEmailAction } from '@/lib/actions/email'
+import { useRouter } from 'next/navigation'
 
 type ClientRow = {
   id: string
@@ -31,12 +34,22 @@ type DevisRow = {
   numero: string
   statut: string
   lignes: unknown
+  lots: unknown
   remise: number | null
   acompte: number | null
   conditions_paiement: string | null
   notes: string | null
   date_validite: string | null
   created_at: string
+  type_client?: string | null
+  adresse_chantier?: string | null
+  code_postal_chantier?: string | null
+  ville_chantier?: string | null
+  type_projet?: string | null
+  puissance_kwc?: number | null
+  nb_panneaux?: number | null
+  production_kwh_an?: number | null
+  etude_eco?: unknown
   clients: ClientRow | null
 }
 
@@ -57,6 +70,7 @@ type LigneItem = {
   prixUnitaire: number
   remise?: number
   tva?: number
+  isText?: boolean
 }
 
 function parseLignes(raw: unknown): LigneItem[] {
@@ -78,8 +92,30 @@ function computeTotals(lignes: LigneItem[], remiseGlobale: number) {
   }
 }
 
+type LotItem = { nom: string; lignes: LigneItem[] }
+
+function parseLots(devis: DevisRow): LotItem[] {
+  if (Array.isArray(devis.lots) && (devis.lots as LotItem[]).length > 0) {
+    return devis.lots as LotItem[]
+  }
+  const flat = parseLignes(devis.lignes)
+  if (flat.length === 0) return []
+  return [{ nom: 'Devis', lignes: flat }]
+}
+
+type EtudeEcoData = {
+  prime_autoconsommation?: number
+  tarif_rachat_surplus?: number
+  taux_autoconsommation?: number
+  economies_annuelles?: number
+  roi_annees?: number
+  gain_20ans?: number
+  hypotheses_note?: string
+}
+
 export default function DevisDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
+  const router = useRouter()
 
   const [devis, setDevis] = useState<DevisRow | null>(null)
   const [profile, setProfile] = useState<ProfileRow | null>(null)
@@ -91,6 +127,7 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
   const [sendError, setSendError] = useState('')
   const [sendEmailTo, setSendEmailTo] = useState('')
   const [justAccepted, setJustAccepted] = useState(false)
+  const [convertingFacture, setConvertingFacture] = useState(false)
   const { formatCurrency } = useLanguage()
 
   useEffect(() => {
@@ -120,6 +157,22 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
     startTransition(async () => {
       await deleteDevisAction(id)
     })
+  }
+
+  const handleDuplicate = () => {
+    startTransition(async () => {
+      const result = await duplicateDevisAction(id)
+      if ('id' in result) router.push(`/devis/${result.id}`)
+    })
+  }
+
+  const handleConvertFacture = async () => {
+    if (!confirm('Convertir ce devis accepté en facture ?')) return
+    setConvertingFacture(true)
+    const result = await createFactureFromDevis(id)
+    setConvertingFacture(false)
+    if ('id' in result) router.push(`/factures/${result.id}`)
+    else alert(`Erreur : ${result.error}`)
   }
 
   const handleSendEmail = async () => {
@@ -157,10 +210,12 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
   )
 
   const client = devis.clients
-  const lignes = parseLignes(devis.lignes)
-  const { montantHT, montantTVA, montantTTC } = computeTotals(lignes, devis.remise ?? 0)
+  const lots = parseLots(devis)
+  const allLignes = lots.flatMap(l => l.lignes).filter(l => !l.isText)
+  const { montantHT, montantTVA, montantTTC } = computeTotals(allLignes, devis.remise ?? 0)
   const acompte = devis.acompte ?? 0
   const statut = devis.statut as DevisStatus
+  const etudeEco = devis.etude_eco as EtudeEcoData | null
 
   return (
     <>
@@ -174,6 +229,9 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
             <ArrowLeft size={15} /> Retour
           </Link>
           <div className="flex-1" />
+          <button onClick={handleDuplicate} className="btn-secondary text-sm" disabled={isPending}>
+            <Copy size={14} /> Dupliquer
+          </button>
           <button onClick={() => window.print()} className="btn-secondary text-sm" disabled={isPending}>
             <Printer size={14} /> Imprimer
           </button>
@@ -226,6 +284,16 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
                 <XCircle size={14} /> Marquer refusé
               </button>
             </>
+          )}
+          {statut === 'accepte' && (
+            <button
+              onClick={handleConvertFacture}
+              disabled={convertingFacture || isPending}
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-white transition-all disabled:opacity-60"
+              style={{ background: 'linear-gradient(135deg, #10b981, #059669)' }}
+            >
+              <Receipt size={14} /> {convertingFacture ? 'Conversion…' : 'Créer la facture'}
+            </button>
           )}
           <button
             onClick={handleDelete}
@@ -326,45 +394,126 @@ export default function DevisDetailPage({ params }: { params: Promise<{ id: stri
             )}
           </div>
 
-          {/* Lignes */}
+          {/* Infos chantier */}
+          {(devis.type_projet || devis.puissance_kwc || devis.adresse_chantier) && (
+            <div className="px-8 pb-4 flex flex-wrap gap-4">
+              {devis.type_projet && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-sky-50 text-sky-700 border border-sky-100">
+                  <Zap size={11} /> {devis.type_projet.charAt(0).toUpperCase() + devis.type_projet.slice(1)}
+                </span>
+              )}
+              {devis.puissance_kwc && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-100">
+                  ⚡ {devis.puissance_kwc} kWc · {devis.nb_panneaux ?? '?'} panneaux
+                </span>
+              )}
+              {devis.production_kwh_an && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-100">
+                  ☀️ {Math.round(devis.production_kwh_an).toLocaleString('fr-FR')} kWh/an
+                </span>
+              )}
+              {devis.adresse_chantier && (
+                <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold bg-slate-50 text-slate-600 border border-slate-100">
+                  <MapPin size={11} /> {devis.adresse_chantier}, {devis.code_postal_chantier} {devis.ville_chantier}
+                </span>
+              )}
+            </div>
+          )}
+
+          {/* Lignes par lots */}
           <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-slate-50">
-                  <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Désignation</th>
-                  <th className="px-6 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider w-16">Qté</th>
-                  <th className="px-6 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider w-28">Prix unit. HT</th>
-                  <th className="px-6 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider w-16">TVA</th>
-                  <th className="px-6 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider w-20">Remise</th>
-                  <th className="px-6 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider w-28">Total HT</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-50">
-                {lignes.length === 0 ? (
-                  <tr>
-                    <td colSpan={6} className="px-6 py-8 text-center text-sm text-slate-400">Aucune ligne dans ce devis</td>
-                  </tr>
-                ) : lignes.map((ligne, i) => {
-                  const ligneHT = ligne.quantite * ligne.prixUnitaire * (1 - (ligne.remise ?? 0) / 100)
-                  return (
-                    <tr key={i} className="hover:bg-slate-50/50">
-                      <td className="px-6 py-4">
-                        <p className="font-medium text-slate-900">{ligne.designation}</p>
-                        {ligne.description && <p className="text-xs text-slate-400 mt-0.5">{ligne.description}</p>}
-                      </td>
-                      <td className="px-6 py-4 text-right text-sm text-slate-600">{ligne.quantite}</td>
-                      <td className="px-6 py-4 text-right text-sm text-slate-600">{formatCurrency(ligne.prixUnitaire)}</td>
-                      <td className="px-6 py-4 text-right text-sm text-slate-500">{ligne.tva ?? 20}%</td>
-                      <td className="px-6 py-4 text-right text-sm text-slate-500">
-                        {(ligne.remise ?? 0) > 0 ? `-${ligne.remise}%` : '—'}
-                      </td>
-                      <td className="px-6 py-4 text-right font-semibold text-slate-900">{formatCurrency(ligneHT)}</td>
-                    </tr>
-                  )
-                })}
-              </tbody>
-            </table>
+            {lots.length === 0 ? (
+              <div className="px-6 py-8 text-center text-sm text-slate-400">Aucune ligne dans ce devis</div>
+            ) : lots.map((lot, li) => {
+              const lotHT = lot.lignes.filter(l => !l.isText).reduce((s, l) => s + l.quantite * l.prixUnitaire * (1 - (l.remise ?? 0) / 100), 0) * (1 - (devis.remise ?? 0) / 100)
+              return (
+                <div key={li} className={li > 0 ? 'border-t border-slate-100' : ''}>
+                  {lots.length > 1 && (
+                    <div className="px-6 py-2 bg-slate-50 flex items-center justify-between">
+                      <span className="text-xs font-bold text-slate-600 uppercase tracking-wider">Lot : {lot.nom}</span>
+                      <span className="text-xs font-semibold text-slate-500">Sous-total : {formatCurrency(lotHT)}</span>
+                    </div>
+                  )}
+                  <table className="w-full">
+                    {li === 0 && (
+                      <thead>
+                        <tr className="bg-slate-50">
+                          <th className="px-6 py-3 text-left text-xs font-semibold text-slate-400 uppercase tracking-wider">Désignation</th>
+                          <th className="px-6 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider w-16">Qté</th>
+                          <th className="px-6 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider w-28">Prix unit. HT</th>
+                          <th className="px-6 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider w-16">TVA</th>
+                          <th className="px-6 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider w-20">Remise</th>
+                          <th className="px-6 py-3 text-right text-xs font-semibold text-slate-400 uppercase tracking-wider w-28">Total HT</th>
+                        </tr>
+                      </thead>
+                    )}
+                    <tbody className="divide-y divide-slate-50">
+                      {lot.lignes.map((ligne, i) => {
+                        if (ligne.isText) return (
+                          <tr key={i} className="bg-slate-50/30">
+                            <td colSpan={6} className="px-6 py-2 text-sm italic text-slate-400">{ligne.designation}</td>
+                          </tr>
+                        )
+                        const ligneHT = ligne.quantite * ligne.prixUnitaire * (1 - (ligne.remise ?? 0) / 100)
+                        return (
+                          <tr key={i} className="hover:bg-slate-50/50">
+                            <td className="px-6 py-4">
+                              <p className="font-medium text-slate-900">{ligne.designation}</p>
+                              {ligne.description && <p className="text-xs text-slate-400 mt-0.5">{ligne.description}</p>}
+                            </td>
+                            <td className="px-6 py-4 text-right text-sm text-slate-600">{ligne.quantite}</td>
+                            <td className="px-6 py-4 text-right text-sm text-slate-600">{formatCurrency(ligne.prixUnitaire)}</td>
+                            <td className="px-6 py-4 text-right text-sm text-slate-500">{ligne.tva ?? 20}%</td>
+                            <td className="px-6 py-4 text-right text-sm text-slate-500">
+                              {(ligne.remise ?? 0) > 0 ? `-${ligne.remise}%` : '—'}
+                            </td>
+                            <td className="px-6 py-4 text-right font-semibold text-slate-900">{formatCurrency(ligneHT)}</td>
+                          </tr>
+                        )
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              )
+            })}
           </div>
+
+          {/* Étude économique */}
+          {etudeEco && (etudeEco.economies_annuelles || etudeEco.roi_annees) && (
+            <div className="mx-6 mb-5 p-4 rounded-2xl border" style={{ background: 'rgba(34,211,238,0.04)', border: '1px solid rgba(34,211,238,0.15)' }}>
+              <div className="flex items-center gap-2 mb-3">
+                <TrendingUp size={15} style={{ color: '#22D3EE' }} />
+                <h3 className="font-semibold text-sm text-slate-800">Étude économique estimée</h3>
+                <span className="ml-auto text-xs text-slate-400">⚠️ Estimations indicatives à vérifier</span>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                {etudeEco.economies_annuelles && (
+                  <div className="text-center p-3 bg-white rounded-xl border border-slate-100">
+                    <p className="text-lg font-bold text-emerald-600">{formatCurrency(etudeEco.economies_annuelles)}</p>
+                    <p className="text-xs text-slate-500">Économies/an</p>
+                  </div>
+                )}
+                {etudeEco.roi_annees && (
+                  <div className="text-center p-3 bg-white rounded-xl border border-slate-100">
+                    <p className="text-lg font-bold text-sky-600">{etudeEco.roi_annees} ans</p>
+                    <p className="text-xs text-slate-500">Retour invest.</p>
+                  </div>
+                )}
+                {etudeEco.gain_20ans && (
+                  <div className="text-center p-3 bg-white rounded-xl border border-slate-100">
+                    <p className="text-lg font-bold text-indigo-600">{formatCurrency(etudeEco.gain_20ans)}</p>
+                    <p className="text-xs text-slate-500">Gain 20 ans</p>
+                  </div>
+                )}
+                {etudeEco.prime_autoconsommation && (
+                  <div className="text-center p-3 bg-white rounded-xl border border-slate-100">
+                    <p className="text-lg font-bold text-amber-600">{formatCurrency(etudeEco.prime_autoconsommation * (devis.puissance_kwc ?? 0))}</p>
+                    <p className="text-xs text-slate-500">Prime autoconso</p>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
 
           {/* Totaux + infos paiement */}
           <div className="p-6 border-t border-slate-100 grid grid-cols-2 gap-8">
