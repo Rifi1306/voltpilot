@@ -129,7 +129,8 @@ export default function SettingsPage() {
     try {
       const logo = localStorage.getItem(LOGO_KEY)
       if (logo) setLogoDataUrl(logo)
-      setSignatureActive(localStorage.getItem(SIG_KEY) === 'true')
+      const sigStored = localStorage.getItem(SIG_KEY)
+      setSignatureActive(sigStored === null ? true : sigStored === 'true')
     } catch { /* ignore */ }
   }, [])
 
