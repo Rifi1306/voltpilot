@@ -65,6 +65,8 @@ export default function AgentsPage() {
     entreprise: '', contact_prenom: '', email: '', region: '', type_activite: 'résidentiel', pays: 'FR', notes: '',
   })
   const [addLoading, setAddLoading] = useState(false)
+  const [searching, setSearching] = useState<string | null>(null)
+  const [searchResult, setSearchResult] = useState<{ added: number; source: string } | null>(null)
 
   const loadData = useCallback(async () => {
     const [{ data: c }, { data: a }] = await Promise.all([
@@ -150,6 +152,21 @@ export default function AgentsPage() {
     await loadProspects()
   }
 
+  async function handleSearch(country: string) {
+    setSearching(country)
+    setSearchResult(null)
+    const body = country === 'FR' ? { offset: prospects.filter(p => p.pays === 'FR').length } : { country }
+    const res = await fetch('/api/agents/prospecting/search', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    })
+    const data = await res.json()
+    setSearchResult({ added: data.added ?? 0, source: data.source ?? country })
+    await loadProspects()
+    setSearching(null)
+  }
+
   async function handleDelete(id: string) {
     if (!confirm('Supprimer ce prospect ?')) return
     await fetch('/api/agents/prospecting', {
@@ -225,6 +242,58 @@ export default function AgentsPage() {
                 <button onClick={() => setSendSuspended(false)} className="text-slate-400 hover:text-slate-200"><X size={14} /></button>
               </div>
             )}
+
+            {/* Recherche automatique */}
+            <div className="volt-card p-5 space-y-3">
+              <div className="flex items-center gap-2">
+                <Bot size={16} style={{ color: 'var(--nebula-bright)' }} />
+                <p className="font-bold text-sm" style={{ color: 'var(--nova)' }}>Recherche automatique mondiale</p>
+              </div>
+              <p className="text-xs" style={{ color: 'var(--star)' }}>
+                Clique sur un pays pour importer les installateurs solaires depuis les bases publiques. Le cron tourne automatiquement chaque nuit à 2h.
+              </p>
+              {searchResult && (
+                <div className="flex items-center gap-2 p-3 rounded-lg text-xs" style={{ background: 'rgba(16,185,129,0.08)', border: '1px solid rgba(16,185,129,0.2)' }}>
+                  <CheckCircle size={13} style={{ color: '#10b981' }} />
+                  <span style={{ color: '#10b981' }}>{searchResult.source} — <strong>+{searchResult.added}</strong> prospect{searchResult.added > 1 ? 's' : ''} ajouté{searchResult.added > 1 ? 's' : ''}</span>
+                </div>
+              )}
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { code: 'FR', label: '🇫🇷 France' },
+                  { code: 'BE', label: '🇧🇪 Belgique' },
+                  { code: 'CH', label: '🇨🇭 Suisse' },
+                  { code: 'DE', label: '🇩🇪 Allemagne' },
+                  { code: 'ES', label: '🇪🇸 Espagne' },
+                  { code: 'GB', label: '🇬🇧 UK' },
+                  { code: 'US', label: '🇺🇸 USA' },
+                  { code: 'UAE', label: '🇦🇪 Dubai' },
+                  { code: 'AU', label: '🇦🇺 Australie' },
+                  { code: 'CA', label: '🇨🇦 Canada' },
+                  { code: 'IT', label: '🇮🇹 Italie' },
+                  { code: 'NL', label: '🇳🇱 Pays-Bas' },
+                  { code: 'MA', label: '🇲🇦 Maroc' },
+                  { code: 'IN', label: '🇮🇳 Inde' },
+                  { code: 'BR', label: '🇧🇷 Brésil' },
+                  { code: 'SG', label: '🇸🇬 Singapour' },
+                ].map(({ code, label }) => (
+                  <button
+                    key={code}
+                    onClick={() => handleSearch(code)}
+                    disabled={searching !== null}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all disabled:opacity-40"
+                    style={{
+                      background: searching === code ? 'rgba(124,58,237,0.25)' : 'rgba(255,255,255,0.06)',
+                      border: '1px solid var(--border-dim)',
+                      color: 'var(--nova)',
+                    }}
+                  >
+                    {searching === code ? <Loader2 size={11} className="animate-spin" /> : null}
+                    {label}
+                  </button>
+                ))}
+              </div>
+            </div>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-4">

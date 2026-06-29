@@ -3,6 +3,10 @@
     {
       "path": "/api/agents/monitor",
       "schedule": "0 6 * * *"
+    },
+    {
+      "path": "/api/agents/prospecting/crawl",
+      "schedule": "0 2 * * *"
     }
   ]
 }
