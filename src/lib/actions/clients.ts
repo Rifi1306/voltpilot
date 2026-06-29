@@ -34,10 +34,29 @@ export async function getClient(id: string) {
   return data
 }
 
-export async function createClientAction(formData: FormData) {
+export async function createClientAction(formData: FormData): Promise<{ error: string } | void> {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) throw new Error('Non authentifié')
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('plan')
+    .eq('id', user.id)
+    .single()
+
+  if (!profile || profile.plan !== 'pro') {
+    const { count } = await supabase
+      .from('clients')
+      .select('id', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+
+    if ((count ?? 0) >= 20) {
+      return {
+        error: 'Vous avez atteint la limite de 20 clients (plan Starter). Passez en Pro pour ajouter des clients en illimité.',
+      }
+    }
+  }
 
   const { error } = await supabase.from('clients').insert({
     user_id: user.id,

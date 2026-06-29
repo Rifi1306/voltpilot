@@ -2,7 +2,7 @@ import { createServerClient } from '@supabase/ssr'
 import { type NextRequest, NextResponse } from 'next/server'
 import type { Database } from './types'
 
-const PROTECTED = ['/dashboard', '/devis', '/clients', '/analytics', '/settings']
+const PROTECTED = ['/dashboard', '/devis', '/clients', '/analytics', '/settings', '/factures', '/catalogue', '/leads', '/dossiers', '/admin', '/agents']
 const AUTH_PAGES = ['/login', '/register']
 const GRACE_DAYS = 14
 

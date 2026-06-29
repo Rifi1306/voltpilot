@@ -90,9 +90,9 @@ export default function DevisPage() {
         action={{ label: t.quotes.newQuote, href: '/devis/nouveau' }}
       />
 
-      <div className="p-6 space-y-5">
+      <div className="p-3 sm:p-6 space-y-5">
         {/* Summary cards */}
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {statusFilters.slice(1).map((f) => {
             const count = allDevis.filter(d => d.statut === f.value).length
             const colors: Record<string, string> = {
@@ -169,8 +169,52 @@ export default function DevisPage() {
             </div>
           </div>
 
-          {/* Table */}
-          <div className="overflow-x-auto">
+          {/* Mobile card list */}
+          <div className="md:hidden divide-y divide-slate-50">
+            {loading ? (
+              <div className="py-12 flex justify-center">
+                <div className="volt-spinner" style={{ width: 22, height: 22, borderWidth: 2 }} />
+              </div>
+            ) : filtered.length === 0 ? (
+              <div className="py-14 text-center">
+                <FileText size={32} className="text-slate-200 mx-auto mb-3" />
+                <p className="text-slate-400 text-sm">{allDevis.length === 0 ? 'Aucun devis pour le moment.' : t.quotes.noQuotes}</p>
+                {allDevis.length === 0 && (
+                  <Link href="/devis/nouveau" className="text-sm text-sky-500 font-medium hover:underline mt-1 block">
+                    Créer votre premier devis →
+                  </Link>
+                )}
+              </div>
+            ) : (
+              filtered.map((d) => {
+                const ttc = rawTTC(d.lignes, d.remise ?? 0)
+                return (
+                  <div key={d.id} className="px-4 py-3 flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-indigo-400 to-purple-500 flex items-center justify-center text-white text-xs font-bold flex-shrink-0">
+                      {(d.clients?.nom ?? '?').charAt(0).toUpperCase()}
+                    </div>
+                    <Link href={`/devis/${d.id}`} className="flex-1 min-w-0">
+                      <p className="text-sm font-semibold text-slate-900 truncate">{d.clients?.nom ?? '—'}</p>
+                      <p className="text-xs text-slate-400">{d.numero} · {new Date(d.created_at).toLocaleDateString(locale)}</p>
+                    </Link>
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-sm font-bold text-slate-900">{formatCurrency(ttc)}</p>
+                      <StatusBadge status={d.statut as DevisStatus} />
+                    </div>
+                    <button
+                      onClick={() => handleDelete(d.id, d.numero)}
+                      className="w-8 h-8 rounded-lg flex items-center justify-center text-slate-300 hover:bg-red-50 hover:text-red-500 transition-colors flex-shrink-0"
+                    >
+                      <Trash2 size={14} />
+                    </button>
+                  </div>
+                )
+              })
+            )}
+          </div>
+
+          {/* Desktop table */}
+          <div className="hidden md:block overflow-x-auto">
             <table className="w-full">
               <thead>
                 <tr>

@@ -67,7 +67,7 @@ export default function ClientsPage() {
         action={{ label: t.clients.newClient, href: '/clients/nouveau' }}
       />
 
-      <div className="p-6 space-y-5">
+      <div className="p-3 sm:p-6 space-y-5">
         {/* Search */}
         <div className="flex gap-3 items-center">
           <div className="relative flex-1 max-w-sm">

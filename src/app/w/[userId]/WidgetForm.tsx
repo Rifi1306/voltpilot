@@ -10,19 +10,15 @@ type Props = {
 }
 
 type FormData = {
-  // Étape 1 — Projet
   type_projet: string
   type_bien: string
   type_toiture: string
   surface: string
-  // Étape 2 — Consommation
   facture_mensuelle: string
   objectif: string
-  // Étape 3 — Localisation
   adresse: string
   code_postal: string
   ville: string
-  // Étape 4 — Contact
   nom: string
   email: string
   telephone: string
@@ -70,7 +66,13 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
     (e: React.ChangeEvent<HTMLInputElement>) =>
       setForm(prev => ({ ...prev, [k]: e.target.checked }))
 
-  const inputClass = 'w-full px-3.5 py-2.5 text-sm rounded-xl border border-slate-200 bg-white text-slate-800 placeholder-slate-400 outline-none transition focus:border-[var(--w-color)] focus:shadow-[0_0_0_3px_var(--w-color-light)]'
+  const inputClass = `
+    w-full px-3.5 py-2.5 text-sm rounded-xl outline-none transition
+    border border-white/10 bg-white/5 text-white placeholder-white/30
+    focus:border-[var(--w-color)] focus:shadow-[0_0_0_3px_var(--w-color-faint)]
+  `
+
+  const labelClass = 'block text-xs font-semibold text-white/50 mb-1.5 flex items-center gap-1.5'
 
   const canNext = () => {
     if (step === 0) return form.type_projet !== ''
@@ -108,7 +110,7 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
       const data = await res.json()
       if (data.success) {
         setEstimation(data.estimation ?? null)
-        setStep(4) // success
+        setStep(4)
       } else {
         setSubmitError(data.error ?? 'Erreur inconnue')
       }
@@ -118,49 +120,71 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
     setSending(false)
   }
 
+  const cssVars = {
+    '--w-color': couleur,
+    '--w-color-faint': couleur + '22',
+    '--w-color-dim': couleur + '33',
+  } as React.CSSProperties
+
   // ── Success screen ──────────────────────────────────────────
   if (step === 4) {
     return (
-      <div className="min-h-screen flex flex-col" style={{ background: '#f8fafc' }}>
-        <div className="px-6 py-5 text-white text-center" style={{ background: couleur }}>
-          <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center mx-auto mb-2">
-            <CheckCircle2 size={22} className="text-white" />
+      <div
+        className="min-h-screen flex flex-col"
+        style={{
+          ...cssVars,
+          background: 'linear-gradient(160deg, #06091a 0%, #0a0f25 100%)',
+        }}
+      >
+        {/* Ambient glow */}
+        <div className="fixed inset-0 pointer-events-none" style={{
+          background: `radial-gradient(ellipse 70% 50% at 50% 0%, ${couleur}18 0%, transparent 65%)`,
+        }} />
+
+        <div className="relative px-6 py-5 text-white text-center border-b border-white/06">
+          <div
+            className="w-12 h-12 rounded-2xl flex items-center justify-center mx-auto mb-3"
+            style={{ background: couleur + '22', border: `1px solid ${couleur}44` }}
+          >
+            <CheckCircle2 size={24} style={{ color: couleur }} />
           </div>
-          <h1 className="text-lg font-bold">Demande envoyée !</h1>
-          <p className="text-sm opacity-80 mt-0.5">Votre estimation personnalisée</p>
+          <h1 className="text-lg font-bold text-white">Demande envoyée !</h1>
+          <p className="text-sm text-white/50 mt-0.5">Votre estimation personnalisée</p>
         </div>
 
-        <div className="p-5 max-w-lg mx-auto w-full space-y-4">
-          <div className="bg-white rounded-2xl border border-slate-100 p-5">
-            <p className="text-slate-600 text-sm leading-relaxed mb-4">
-              Merci <strong>{form.nom}</strong> ! <strong>{companyNom}</strong> vous contactera sous 24 à 48h pour affiner votre projet.
+        <div className="relative p-5 max-w-lg mx-auto w-full space-y-4">
+          <div className="rounded-2xl border border-white/08 bg-white/04 backdrop-blur-sm p-5">
+            <p className="text-white/70 text-sm leading-relaxed mb-4">
+              Merci <strong className="text-white">{form.nom}</strong> !{' '}
+              <strong className="text-white">{companyNom}</strong> vous contactera sous 24 à 48h.
             </p>
 
             {estimation && (
               <div className="space-y-3">
-                <h3 className="text-sm font-bold text-slate-700 uppercase tracking-wide">Votre estimation solaire</h3>
+                <h3 className="text-xs font-bold text-white/40 uppercase tracking-widest">Estimation solaire</h3>
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="bg-slate-50 rounded-xl p-3 text-center">
-                    <div className="text-xl font-bold" style={{ color: couleur }}>{estimation.nb_panneaux}</div>
-                    <div className="text-xs text-slate-500 mt-0.5">Panneaux</div>
-                  </div>
-                  <div className="bg-slate-50 rounded-xl p-3 text-center">
-                    <div className="text-xl font-bold" style={{ color: couleur }}>{estimation.puissance_kwc} kWc</div>
-                    <div className="text-xs text-slate-500 mt-0.5">Puissance</div>
-                  </div>
-                  <div className="bg-slate-50 rounded-xl p-3 text-center">
-                    <div className="text-xl font-bold" style={{ color: couleur }}>{(estimation.production_annuelle / 1000).toFixed(1)} MWh</div>
-                    <div className="text-xs text-slate-500 mt-0.5">Production/an</div>
-                  </div>
+                  {[
+                    { val: String(estimation.nb_panneaux), unit: 'Panneaux' },
+                    { val: `${estimation.puissance_kwc} kWc`, unit: 'Puissance' },
+                    { val: `${(estimation.production_annuelle / 1000).toFixed(1)} MWh`, unit: 'Production/an' },
+                  ].map(({ val, unit }) => (
+                    <div key={unit} className="rounded-xl p-3 text-center border border-white/08 bg-white/03">
+                      <div className="text-lg font-bold" style={{ color: couleur }}>{val}</div>
+                      <div className="text-xs text-white/40 mt-0.5">{unit}</div>
+                    </div>
+                  ))}
                 </div>
 
                 {showPrice && (
-                  <div className="rounded-xl p-4 text-center border-2" style={{ borderColor: couleur + '44', background: couleur + '08' }}>
-                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1">Fourchette de prix estimée</p>
+                  <div
+                    className="rounded-xl p-4 text-center border"
+                    style={{ borderColor: couleur + '33', background: couleur + '0a' }}
+                  >
+                    <p className="text-xs font-semibold text-white/40 uppercase tracking-wide mb-1">Fourchette de prix estimée</p>
                     <p className="text-2xl font-bold" style={{ color: couleur }}>
                       {estimation.fourchette_min.toLocaleString('fr-FR')} — {estimation.fourchette_max.toLocaleString('fr-FR')} €
                     </p>
-                    <p className="text-xs text-slate-400 mt-1">Prix TTC indicatif · Devis précis sur rendez-vous</p>
+                    <p className="text-xs text-white/30 mt-1">Prix TTC indicatif · Devis précis sur rendez-vous</p>
                   </div>
                 )}
               </div>
@@ -171,41 +195,59 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
     )
   }
 
-  // ── Progress bar ────────────────────────────────────────────
   const progress = ((step + 1) / STEPS.length) * 100
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: '#f8fafc', '--w-color': couleur, '--w-color-light': couleur + '22' } as React.CSSProperties}>
+    <div
+      className="min-h-screen flex flex-col"
+      style={{
+        ...cssVars,
+        background: 'linear-gradient(160deg, #06091a 0%, #0a0f25 100%)',
+      }}
+    >
+      {/* Ambient glow */}
+      <div className="fixed inset-0 pointer-events-none" style={{
+        background: `radial-gradient(ellipse 70% 45% at 50% -5%, ${couleur}16 0%, transparent 60%)`,
+      }} />
+
       {/* Header */}
-      <div className="px-6 py-5 text-white" style={{ background: couleur }}>
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center">
-            <Sun size={18} className="text-white" />
+      <div className="relative px-6 py-5 border-b border-white/06">
+        <div className="flex items-center gap-3 mb-4">
+          <div
+            className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{ background: couleur + '22', border: `1px solid ${couleur}44` }}
+          >
+            <Sun size={18} style={{ color: couleur }} />
           </div>
           <div>
-            <h1 className="text-base font-bold leading-tight">{companyNom}</h1>
-            <p className="text-xs opacity-75">Devis solaire gratuit</p>
+            <h1 className="text-sm font-bold text-white leading-tight">{companyNom}</h1>
+            <p className="text-xs text-white/40">Devis solaire gratuit</p>
           </div>
         </div>
+
         {/* Progress */}
-        <div className="space-y-1">
-          <div className="flex justify-between text-xs opacity-75">
+        <div className="space-y-1.5">
+          <div className="flex justify-between text-xs text-white/40">
             <span>Étape {step + 1} sur {STEPS.length}</span>
-            <span>{STEPS[step]}</span>
+            <span className="font-medium" style={{ color: couleur }}>{STEPS[step]}</span>
           </div>
-          <div className="h-1.5 bg-white/25 rounded-full overflow-hidden">
-            <div className="h-full rounded-full bg-white transition-all duration-300" style={{ width: `${progress}%` }} />
+          <div className="h-1 bg-white/08 rounded-full overflow-hidden">
+            <div
+              className="h-full rounded-full transition-all duration-500"
+              style={{ width: `${progress}%`, background: couleur }}
+            />
           </div>
         </div>
       </div>
 
       {/* Steps */}
-      <div className="flex-1 p-5 max-w-lg mx-auto w-full">
-        {/* Étape 0 — Votre projet */}
+      <div className="relative flex-1 p-5 max-w-lg mx-auto w-full">
+
+        {/* Étape 0 */}
         {step === 0 && (
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5"><Home size={13} /> Type de projet</label>
+              <label className={labelClass}><Home size={13} /> Type de projet</label>
               <select value={form.type_projet} onChange={set('type_projet')} className={inputClass}>
                 <option>Résidentiel</option>
                 <option>Professionnel / PME</option>
@@ -214,7 +256,7 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">Type de bien</label>
+              <label className={labelClass}>Type de bien</label>
               <select value={form.type_bien} onChange={set('type_bien')} className={inputClass}>
                 <option>Maison individuelle</option>
                 <option>Maison en copropriété</option>
@@ -224,7 +266,7 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">Type de toiture</label>
+              <label className={labelClass}>Type de toiture</label>
               <select value={form.type_toiture} onChange={set('type_toiture')} className={inputClass}>
                 <option>Tuiles</option>
                 <option>Ardoises</option>
@@ -234,8 +276,8 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">
-                Surface de toiture disponible (m²) <span className="text-slate-400 font-normal">— optionnel</span>
+              <label className={labelClass}>
+                Surface de toiture (m²) <span className="text-white/25 font-normal">— optionnel</span>
               </label>
               <input
                 type="number"
@@ -250,11 +292,11 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
           </div>
         )}
 
-        {/* Étape 1 — Consommation */}
+        {/* Étape 1 */}
         {step === 1 && (
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5"><Euro size={13} /> Facture d&apos;électricité mensuelle moyenne (€)</label>
+              <label className={labelClass}><Euro size={13} /> Facture mensuelle moyenne (€)</label>
               <input
                 type="number"
                 min="20"
@@ -264,10 +306,10 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
                 placeholder="ex : 120"
                 className={inputClass}
               />
-              <p className="text-xs text-slate-400 mt-1">Aide à calibrer la puissance recommandée</p>
+              <p className="text-xs text-white/30 mt-1">Aide à calibrer la puissance recommandée</p>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">Objectif principal</label>
+              <label className={labelClass}>Objectif principal</label>
               <select value={form.objectif} onChange={set('objectif')} className={inputClass}>
                 <option>Réduire ma facture</option>
                 <option>Produire et revendre</option>
@@ -276,7 +318,9 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
               </select>
             </div>
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">Message ou informations complémentaires <span className="text-slate-400 font-normal">— optionnel</span></label>
+              <label className={labelClass}>
+                Message <span className="text-white/25 font-normal">— optionnel</span>
+              </label>
               <textarea
                 value={form.message}
                 onChange={set('message')}
@@ -288,16 +332,18 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
           </div>
         )}
 
-        {/* Étape 2 — Localisation */}
+        {/* Étape 2 */}
         {step === 2 && (
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5 flex items-center gap-1.5"><MapPin size={13} /> Adresse <span className="text-slate-400 font-normal">— optionnel</span></label>
+              <label className={labelClass}>
+                <MapPin size={13} /> Adresse <span className="text-white/25 font-normal">— optionnel</span>
+              </label>
               <input type="text" value={form.adresse} onChange={set('adresse')} placeholder="12 Rue du Soleil" className={inputClass} />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1.5">Code postal *</label>
+                <label className={labelClass}>Code postal *</label>
                 <input
                   type="text"
                   required
@@ -309,51 +355,67 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
                 />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1.5">Ville</label>
+                <label className={labelClass}>Ville</label>
                 <input type="text" value={form.ville} onChange={set('ville')} placeholder="Bordeaux" className={inputClass} />
               </div>
             </div>
-            <div className="bg-amber-50 border border-amber-200 rounded-xl p-3 flex gap-2.5">
-              <Zap size={16} className="text-amber-500 flex-shrink-0 mt-0.5" />
-              <p className="text-xs text-amber-700">Le code postal nous permet de calculer l&apos;ensoleillement réel de votre région et d&apos;affiner l&apos;estimation de production.</p>
+            <div
+              className="rounded-xl p-3 flex gap-2.5 border"
+              style={{ background: couleur + '0d', borderColor: couleur + '33' }}
+            >
+              <Zap size={15} className="flex-shrink-0 mt-0.5" style={{ color: couleur }} />
+              <p className="text-xs text-white/55 leading-relaxed">
+                Le code postal nous permet de calculer l&apos;ensoleillement réel de votre région et d&apos;affiner l&apos;estimation de production.
+              </p>
             </div>
           </div>
         )}
 
-        {/* Étape 3 — Contact */}
+        {/* Étape 3 */}
         {step === 3 && (
           <div className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-600 mb-1.5">Nom complet *</label>
+              <label className={labelClass}>Nom complet *</label>
               <input required type="text" value={form.nom} onChange={set('nom')} placeholder="Jean Dupont" className={inputClass} />
             </div>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1.5">Email *</label>
+                <label className={labelClass}>Email *</label>
                 <input required type="email" value={form.email} onChange={set('email')} placeholder="jean@email.fr" className={inputClass} />
               </div>
               <div>
-                <label className="block text-xs font-semibold text-slate-600 mb-1.5">Téléphone</label>
+                <label className={labelClass}>Téléphone</label>
                 <input type="tel" value={form.telephone} onChange={set('telephone')} placeholder="06 XX XX XX XX" className={inputClass} />
               </div>
             </div>
 
             {/* RGPD */}
-            <label className="flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-colors" style={{ borderColor: form.consentement ? couleur + '66' : '#e2e8f0', background: form.consentement ? couleur + '08' : '#fafafa' }}>
+            <label
+              className="flex items-start gap-3 p-3 rounded-xl border cursor-pointer transition-all"
+              style={{
+                borderColor: form.consentement ? couleur + '55' : 'rgba(255,255,255,0.1)',
+                background: form.consentement ? couleur + '0d' : 'rgba(255,255,255,0.03)',
+              }}
+            >
               <input
                 type="checkbox"
                 checked={form.consentement}
                 onChange={setCheck('consentement')}
-                className="mt-0.5 flex-shrink-0 accent-[var(--w-color)]"
+                className="mt-0.5 flex-shrink-0"
                 style={{ accentColor: couleur }}
               />
-              <span className="text-xs text-slate-600 leading-relaxed">
-                J&apos;accepte que mes données soient transmises à <strong>{companyNom}</strong> pour traiter ma demande de devis. Ces données ne seront pas utilisées à d&apos;autres fins ni partagées avec des tiers. <span className="text-slate-400">(Requis *)</span>
+              <span className="text-xs text-white/50 leading-relaxed">
+                J&apos;accepte que mes données soient transmises à{' '}
+                <strong className="text-white/75">{companyNom}</strong> pour traiter ma demande.
+                Ces données ne seront pas partagées avec des tiers.{' '}
+                <span className="text-white/30">(Requis *)</span>
               </span>
             </label>
 
             {submitError && (
-              <p className="text-center text-sm text-red-500 bg-red-50 rounded-xl p-3">{submitError}</p>
+              <p className="text-center text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl p-3">
+                {submitError}
+              </p>
             )}
           </div>
         )}
@@ -364,7 +426,8 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
             <button
               type="button"
               onClick={() => setStep(s => s - 1)}
-              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl border border-slate-200 text-sm font-medium text-slate-600 bg-white hover:bg-slate-50 transition-colors"
+              className="flex items-center gap-1.5 px-4 py-2.5 rounded-xl text-sm font-medium text-white/60 transition-all hover:text-white hover:bg-white/06"
+              style={{ border: '1px solid rgba(255,255,255,0.1)' }}
             >
               <ChevronLeft size={15} /> Retour
             </button>
@@ -376,8 +439,11 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
               if (step < 3) setStep(s => s + 1)
               else handleSubmit()
             }}
-            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-white font-bold text-sm transition-all active:scale-[0.98] disabled:opacity-50"
-            style={{ background: canNext() && !sending ? couleur : '#94a3b8' }}
+            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-white font-bold text-sm transition-all active:scale-[0.98] disabled:opacity-40"
+            style={{
+              background: canNext() && !sending ? couleur : 'rgba(255,255,255,0.12)',
+              boxShadow: canNext() && !sending ? `0 4px 20px ${couleur}44` : 'none',
+            }}
           >
             {sending ? (
               <><Loader2 size={16} className="animate-spin" /> Calcul en cours…</>
@@ -389,7 +455,7 @@ export function WidgetForm({ installerId, companyNom, couleur, showPrice }: Prop
           </button>
         </div>
 
-        <p className="text-center text-xs text-slate-400 mt-4">
+        <p className="text-center text-xs text-white/25 mt-4">
           Gratuit · Sans engagement · Vos données restent confidentielles
         </p>
       </div>
